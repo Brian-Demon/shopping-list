@@ -3,5 +3,8 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
+  get "/auth/:provider/callback" => "sessions#create"
+  get "/logout" => "sessions#destroy", :as => :logout
+
   
 end
