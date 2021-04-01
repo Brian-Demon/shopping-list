@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  has_many :lists
   validates :provider, presence: true
   validates :uid, presence: true
   validates :username, presence: true
