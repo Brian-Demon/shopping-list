@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  list: one
+  name: MyString
+  person: MyString
+  department: MyString
+  bought: false
+
+two:
+  list: two
+  name: MyString
+  person: MyString
+  department: MyString
+  bought: false
