@@ -14,8 +14,10 @@
   </head>
 
   <body>
-  <div class="container-fluid">
-    <%= yield %>
-  </div>
+    <%= render "shared/navbar" %>
+
+    <div class="container-fluid">
+      <%= yield %>
+    </div>
   </body>
 </html>
