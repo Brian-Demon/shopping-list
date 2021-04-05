@@ -6,7 +6,7 @@ class ItemsController < ApplicationController
     @item = @list.items.new(name: params[:name], person: params[:person], department: params[:department])
 
     if @item.save
-      redirect_to "/lists/#{@list.id}", notice: "#{@item.name} added to the list for #{@item.person}"
+      redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}"
     else
       #redirect_to root_path, notice: "Invalid item"
       render "lists/show"
