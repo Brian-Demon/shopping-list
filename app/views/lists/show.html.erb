@@ -1,15 +1,61 @@
-<h1><%= @list.name %> List</h1>
+<h1><%= @list.name %> List:</h1>
+
+<% flash.each do |type, msg| %>
+  <div class="alert alert-info my-3">
+      <%= msg %>
+  </div>
+<% end %>
 
 <div class="row">
   <div class="col">
-    <%= form_with url: items_path(list_id: @list.id) do |form| %>
-        <%= form.label :name, "Item name:", class: "form-label" %>
-        <%= form.text_field :name, class: "form-control" %>
-        <%= form.label :person, "Person:", class: "form-label" %>
-        <%= form.text_field :person, class: "form-control" %>
-        <%= form.label :department, "Department:", class: "form-label" %>
-        <%= form.text_field :department, class: "form-control" %>
-        <%= form.submit "Add Item", class: "btn btn-primary" %>
-    <% end %>
+    <div class="form-group">
+      <%= form_with url: items_path(list_id: @list.id) do |form| %>
+        <div class="col-md-4">
+          <%= form.label :name, "Item name:", class: "form-label" %>
+          <%= form.text_field :name, class: "form-control #{item_validation_class(@item, :name)}", list: "item_name_datalist_options" %>
+          <% if item_has_error_for?(@item, :name) %>
+            <div class="invalid-feedback"><%= @item.errors.full_messages_for(:name).join(",") %></div>
+          <% end %>
+          <datalist id="item_name_datalist_options">
+            <% current_user.lists.find_by(id: @list.id).items.select(:name).distinct.each do |item| %>
+              <option><%= item.name %></option>
+            <% end %>
+          </datalist>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.label :person, "Person:", class: "form-label" %>
+          <%= form.text_field :person, class: "form-control", list: "item_person_datalist_options" %>
+          <datalist id="item_person_datalist_options">
+            <% current_user.lists.find_by(id: @list.id).items.select(:person).distinct.each do |item| %>
+              <option><%= item.person %></option>
+            <% end %>
+          </datalist>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.label :department, "Department:", class: "form-label" %>
+          <%= form.text_field :department, class: "form-control", list: "item_department_datalist_options" %>
+          <datalist id="item_department_datalist_options">
+            <% current_user.lists.find_by(id: @list.id).items.select(:department).distinct.each do |item| %>
+              <option><%= item.department %></option>
+            <% end %>
+          </datalist>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.submit "Add Item", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">
+      <% current_user.lists.find_by(id: @list.id).items.each do |item| %>
+        <div class="card border-dark m-4 text-center">
+          <%= item.name %>, <%= item.person %>, <%= item.department %>
+        </div>
+      <% end %>
+    </div>
   </div>
 </div>
