@@ -15,7 +15,7 @@ class ListsController < ApplicationController
   end
 
   def destroy
-    if @list = current_user.lists.find(params[:id])
+    if @list = current_user.lists.find_by(id: params[:id])
       @list.destroy
       redirect_to root_path, notice: "List deleted"
     else

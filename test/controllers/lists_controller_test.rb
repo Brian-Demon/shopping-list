@@ -39,6 +39,55 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
-  
+  test "user can destroy a valid list successfully" do
+    post "/auth/google_oauth2"
+    follow_redirect!
+    list = User.last.lists.create(name: "Shopping Place")
+    delete list_path(list)
+    assert_equal 0, List.count
+  end
 
+  test "user is redirected to root with success notice when valid list is destroyed" do
+    post "/auth/google_oauth2"
+    follow_redirect!
+    list = User.last.lists.create(name: "Shopping Place")
+    delete list_path(list)
+    assert_redirected_to root_path
+    assert_equal "List deleted", flash[:notice]
+  end
+
+  test "user cannot destroy non-existant list" do
+    post "/auth/google_oauth2"
+    follow_redirect!
+    list = User.last.lists.create(name: "Shopping Place")
+    delete list_path(12345)
+    assert_redirected_to root_path
+    assert_equal "List not found", flash[:notice]
+  end
+
+  test "user cannot a nil list" do
+    post "/auth/google_oauth2"
+    follow_redirect!
+    assert_raises ActionController::RoutingError do
+      delete "/lists/"
+    end
+  end
+
+  test "user cannot destroy someone elses list" do
+    someone_else = User.create(username: "Someone Else", provider: "Nowhere", uid: "31459")
+    list = someone_else.lists.create(name: "Shopping Place")
+    post "/auth/google_oauth2"
+    follow_redirect!
+    delete list_path(list)
+    assert_redirected_to root_path
+    assert_equal "List not found", flash[:notice]
+  end
+
+  test "guest cannot destroy someone elses list" do
+    someone_else = User.create(username: "Someone Else", provider: "Nowhere", uid: "31459")
+    list = someone_else.lists.create(name: "Shopping Place")
+    delete list_path(list)
+    assert_redirected_to root_path
+    assert_equal "You must be signed in to do that.", flash[:notice]
+  end
 end
