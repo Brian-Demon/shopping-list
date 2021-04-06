@@ -2,7 +2,8 @@ class ListsController < ApplicationController
   before_action :require_user_logged_in!
   
   def create
-    if @list = current_user.lists.create(name: params[:name])
+    @list = current_user.lists.new(name: params[:name])
+    if @list.save
       redirect_to @list
     else
       redirect_to root_path, notice: "Invalid list name"
