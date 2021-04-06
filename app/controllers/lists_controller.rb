@@ -12,4 +12,13 @@ class ListsController < ApplicationController
   def show
     @list = List.find_by(id: params[:id])
   end
+
+  def destroy
+    if @list = current_user.lists.find(params[:id])
+      @list.destroy
+      redirect_to root_path, notice: "List deleted"
+    else
+      redirect_back(fallback_location: root_path, notice: "List not found")
+    end
+  end
 end
