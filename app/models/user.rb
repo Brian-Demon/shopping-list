@@ -9,6 +9,7 @@ class User < ApplicationRecord
       user.provider = auth["provider"]
       user.uid = auth["uid"]
       user.username = auth["info"]["name"]
+      user.image = auth["info"]["image"]
     end
   end
 end
