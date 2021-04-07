@@ -10,10 +10,6 @@ class ListsController < ApplicationController
     end
   end
 
-  def edit
-    
-  end
-
   def show
     @previous_item_names = Item.joins(:list).where(list: { user: current_user}).pluck(:name).uniq
     @previous_item_people = Item.joins(:list).where(list: { user: current_user}).pluck(:person).uniq
