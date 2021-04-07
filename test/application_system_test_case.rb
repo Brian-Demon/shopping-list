@@ -12,7 +12,13 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
     Capybara.server_host = "0.0.0.0"
     Capybara.server = :puma, { Threads: "1:1" }
     Capybara.app_host = "http://host.docker.internal:#{Capybara.current_session.server.port}"
-    host! "http://host.docker.internal:#{Capybara.current_session.server.port}"
     super
+  end
+
+  def login!
+    visit root_path
+    within(".call-to-action") do
+      click_on "Login with Google"
+    end
   end
 end

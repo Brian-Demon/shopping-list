@@ -8,8 +8,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}"
     else
-      #redirect_to root_path, notice: "Invalid item"
-      render "lists/show"
+      redirect_to list_path(@list), notice: @item.errors.full_messages.join(", ")
     end
   end
 end

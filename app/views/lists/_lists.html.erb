@@ -1,10 +1,10 @@
 <div class="row">
   <div class="card col-4 offset-4">
     <% current_user.lists.each do |list| %>
-      <div class="card border-dark">
+      <div class="shopping-list card border-dark">
         <div class="card-body">
             <h5 class="card-title"><%= list.name %></h5>
-            <p class="card-text"><h6>Items: <%= list.items.count %></h6></p>
+            <p class="card-text"><h6 class="item-count">Items: <%= list.items.count %></h6></p>
         </div>
           <% if list.persisted? %>
             <%= link_to "Delete", list, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
