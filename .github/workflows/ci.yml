@@ -27,7 +27,3 @@ jobs:
         yarn --frozen-lockfile
     - name: Run Unit Tests
       run: rails test
-    - name: Start Selenium
-      run: docker-compose up -d
-    - name: Run System Tests
-      run: rails test:system
