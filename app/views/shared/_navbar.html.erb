@@ -11,7 +11,7 @@
             </ul>
             <div class="navbar-text">
             <% if current_user %>
-                Welcome, <%= current_user.username %>. <%= link_to "Logout", logout_path, class: "btn btn-secondary" %>
+                Welcome, <%= current_user.username %>. <%= user_avatar current_user %> <%= link_to "Logout", logout_path, class: "btn btn-secondary" %>
             <% else %>
                 <%= button_to "Login with Google", "/auth/google_oauth2", class: "btn btn-secondary" %>
             <% end %>
