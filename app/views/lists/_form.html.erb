@@ -49,7 +49,7 @@
   </div>
   <div class="row">
     <div class="col-3 offset-5 the-list">
-      <% current_user.lists.find_by(id: list.id).items.each do |item| %>
+      <% list.items.each do |item| %>
         <div class="card border-dark m-4 text-center list-item">
           <%= item.name %>, <%= item.person %>, <%= item.department %>
         </div>
