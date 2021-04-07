@@ -7,7 +7,7 @@
             <p class="card-text"><h6 class="item-count">Items: <%= list.items.count %></h6></p>
         </div>
           <% if list.persisted? %>
-            <%= link_to "Delete", list, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+            <%= link_to "Edit List", edit_list_path(list), class: "btn btn-outline-primary" %>
           <% end %>
       </div>
     <% end %>

@@ -66,7 +66,7 @@ class ItemsTest < ApplicationSystemTestCase
   test "logged in user populates department name suggestions from previous list" do
     login!
     user = User.find_by(uid: "31415")
-    create_previous_shopping_list! user 
+    create_previous_shopping_list! user
     list = user.lists.create(name: "Shopping Place")
     visit list_path(list)
     assert_selector "#item_department_datalist_options option", count: 2, visible: false

@@ -37,4 +37,35 @@ class ListsTest < ApplicationSystemTestCase
       assert_text "Items: 1"
     end
   end
+
+  test "logged in user can edit their lists" do
+    login!
+    user = User.last
+    list = user.lists.create(name: "Shopping Place")
+    list.items.create(name: "Bananas", person: "Person", department: "Produce")
+    visit root_path
+    assert_selector ".shopping-list", count: 1
+    within ".shopping-list" do
+      click_on "Edit List"
+    end
+  end
+
+  test "logged in user can delete a list" do
+    login!
+    user = User.last
+    list = user.lists.create(name: "Shopping Place")
+    list.items.create(name: "Bananas", person: "Person", department: "Produce")
+    visit root_path
+    assert_selector ".shopping-list", count: 1
+    within ".shopping-list" do
+      click_on "Edit List"
+    end
+    accept_confirm do
+      click_link 'Delete List'
+    end
+    sleep 0.1
+
+    assert_equal 0, List.count
+    assert_selector ".alert.alert-info", text: "List deleted"
+  end
 end

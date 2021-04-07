@@ -1,0 +1,59 @@
+<div class="row text-center">
+  <h1><%= @list.name %> List:</h1>
+  <div class="col-2 offset-5 delete-list-button">
+    <%= link_to "Delete List", list, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger" %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-6 offset-5">
+    <div class="form-group">
+      <%= form_with url: items_path(list_id: list.id) do |form| %>
+        <div class="col-md-4">
+          <%= form.label :name, "Item name:", class: "form-label" %>
+          <%= form.text_field :name, class: "form-control #{item_validation_class(item, :name)}", list: "item_name_datalist_options" %>
+          <% if item_has_error_for?(item, :name) %>
+            <div class="invalid-feedback"><%= item.errors.full_messages_for(:name).join(",") %></div>
+          <% end %>
+          <datalist id="item_name_datalist_options">
+            <% @previous_item_names.each do |name| %>
+              <option><%= name %></option>
+            <% end %>
+          </datalist>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.label :person, "Person:", class: "form-label" %>
+          <%= form.text_field :person, class: "form-control", list: "item_person_datalist_options" %>
+          <datalist id="item_person_datalist_options">
+            <% @previous_item_people.each do |person| %>
+              <option><%= person %></option>
+            <% end %>
+          </datalist>
+        </div>
+
+        <div class="col-md-4">
+          <%= form.label :department, "Department:", class: "form-label" %>
+          <%= form.text_field :department, class: "form-control", list: "item_department_datalist_options" %>
+          <datalist id="item_department_datalist_options">
+            <% @previous_item_departments.each do |department| %>
+              <option><%= department %></option>
+            <% end %>
+          </datalist>
+        </div>
+
+        <div class="col-md-4 pt-3">
+          <%= form.submit "Add Item", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 offset-5 the-list">
+      <% list.items.each do |item| %>
+        <div class="card border-dark m-4 text-center list-item">
+          <%= item.name %>, <%= item.person %>, <%= item.department %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
