@@ -1,3 +1,29 @@
 name: Tests
 on: 
-  manual_dispatch:
+  workflow_dispatch:
+  push:
+jobs:
+  tests:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Ruby
+      uses: actions/setup-ruby@v1
+      with:
+        ruby-version: 3.0.0
+    - name: Install Bundler
+      run: gem install bundler:2.1.4
+    - name: Install Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.20.2
+    - name: Setup Rails
+      env:
+        RAILS_ENV: test
+      run: |
+        bundle install --no-deployment --jobs 4 --retry 3
+        rails db:create
+        rails db:migrate
+        yarn --frozen-lockfile
+    - name: Run Unit Tests
+      run: rails test
