@@ -1,0 +1,4 @@
+name: Tests
+on: 
+  manual_dispatch:
+  push:
