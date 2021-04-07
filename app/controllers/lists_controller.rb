@@ -11,6 +11,9 @@ class ListsController < ApplicationController
   end
 
   def show
+    @previous_item_names = Item.joins(:list).where(list: { user: current_user}).pluck(:name).uniq
+    @previous_item_people = Item.joins(:list).where(list: { user: current_user}).pluck(:person).uniq
+    @previous_item_departments = Item.joins(:list).where(list: { user: current_user}).pluck(:department).uniq
     @list = List.find_by(id: params[:id])
   end
 

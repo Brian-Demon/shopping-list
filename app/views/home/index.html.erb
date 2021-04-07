@@ -9,7 +9,7 @@
     <div class="container">
 
       <div class="row mt-3">
-        <div class="col-8 offset-2">
+        <div class="col-8 offset-2 create-list">
           <%= form_with url: lists_path do |form| %>
               <%= form.label :name, "Create New List", class: "form-label" %>
               <%= form.text_field :name, class: "form-control", placeholder: "List name..." %>
@@ -26,7 +26,7 @@
 
     </div>
   <% else %>
-    <div class="container">
+    <div class="container call-to-action">
       <div class="row mt-3">
         <div class="col-6 text-end">
           <h4>Try logging in!</h4>

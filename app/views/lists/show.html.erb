@@ -17,8 +17,8 @@
             <div class="invalid-feedback"><%= @item.errors.full_messages_for(:name).join(",") %></div>
           <% end %>
           <datalist id="item_name_datalist_options">
-            <% current_user.lists.find_by(id: @list.id).items.select(:name).distinct.each do |item| %>
-              <option><%= item.name %></option>
+            <% @previous_item_names.each do |name| %>
+              <option><%= name %></option>
             <% end %>
           </datalist>
         </div>
@@ -27,8 +27,8 @@
           <%= form.label :person, "Person:", class: "form-label" %>
           <%= form.text_field :person, class: "form-control", list: "item_person_datalist_options" %>
           <datalist id="item_person_datalist_options">
-            <% current_user.lists.find_by(id: @list.id).items.select(:person).distinct.each do |item| %>
-              <option><%= item.person %></option>
+            <% @previous_item_people.each do |person| %>
+              <option><%= person %></option>
             <% end %>
           </datalist>
         </div>
@@ -37,8 +37,8 @@
           <%= form.label :department, "Department:", class: "form-label" %>
           <%= form.text_field :department, class: "form-control", list: "item_department_datalist_options" %>
           <datalist id="item_department_datalist_options">
-            <% current_user.lists.find_by(id: @list.id).items.select(:department).distinct.each do |item| %>
-              <option><%= item.department %></option>
+            <% @previous_item_departments.each do |department| %>
+              <option><%= department %></option>
             <% end %>
           </datalist>
         </div>
@@ -50,9 +50,9 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-3">
+    <div class="col-3 the-list">
       <% current_user.lists.find_by(id: @list.id).items.each do |item| %>
-        <div class="card border-dark m-4 text-center">
+        <div class="card border-dark m-4 text-center list-item">
           <%= item.name %>, <%= item.person %>, <%= item.department %>
         </div>
       <% end %>
