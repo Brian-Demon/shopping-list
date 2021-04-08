@@ -300,3 +300,8 @@ label,
     background-color: $table-hover-bg;
   }
 }
+
+
+.form-control, .form-control:active, .form-control:focus {
+  color: $gray-700;
+}
