@@ -1,50 +1,17 @@
 <div class="row">
-  <div class="col-8">
+  <div class="col-4">
+    <h3>Lists</h3>
     <div class="list-group" id="list-tab" role="tablist">
       <% current_user.lists.each_with_index do |list, index| %>
         <%= list_item(list, index == 0) %>
       <% end %>
     </div>
   </div>
-</div>
 
-<div class="row pt-4">
   <div class="col-8">
     <div class="tab-content" id="nav-tabContent">
       <% current_user.lists.each_with_index do |list, index| %>
-        <%= tag.div class: "tab-pane fade show #{index == 0 ? 'active' : ''}", id: "list-#{list.id}" do %>
-        <h3>Items <%= link_to image_tag("edit_icon.png", width: 16), edit_list_path(list) %></h3>
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Item</th>
-                <th scope="col">Person</th>
-                <th scope="col">Department</th>
-                <th scope="col">Remove</th>
-              </tr>
-            </thead>
-            <tbody>
-              <% list.items.each_with_index do |item, index| %>
-                <tr>
-                  <th scope="row"><%= index + 1 %></th>
-                  <td>
-                    <%= item.name %>
-                  </td>
-                  <td>
-                    <%= item.person %>
-                  </td>
-                  <td>
-                    <%= item.department %>
-                  </td>
-                  <td>
-                    <%= link_to image_tag("x.png", width: 16), item, method: :delete %>
-                  </td>
-                </tr>
-              <% end %>
-            </tbody>
-          </table>
-        <% end %>
+        <%= render "lists/items_table", list: list, index: index %>
       <% end %>
     </div>
   </div>
