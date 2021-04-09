@@ -12,6 +12,21 @@ class ItemsController < ApplicationController
     end
   end
 
+  def update
+    @item = Item.find_by(id: params[:id])
+    if @item.update(bought: params[:bought])
+      respond_to do |format|
+        format.html { redirect_to @item.list, notice: "Item updated" }
+        format.json { render json: { message: "Item updated", item: @item.attributes } }
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to @item.list, notice: "Item not updated", status: 422 }
+        format.json { render json: { message: "Could not update item", errors: @item.errors } }
+      end
+    end
+  end
+
   def destroy
     if @item = Item.find_by(id: params[:id])
       @item.destroy

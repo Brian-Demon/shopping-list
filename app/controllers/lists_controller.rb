@@ -24,6 +24,10 @@ class ListsController < ApplicationController
     @list = List.find_by(id: params[:id])
   end
 
+  def update
+    
+  end
+
   def destroy
     if @list = current_user.lists.find_by(id: params[:id])
       @list.destroy
