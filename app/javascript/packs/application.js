@@ -28,7 +28,7 @@ window.addEventListener("load", () => {
         });
         element.addEventListener("ajax:error", (event) => {
             const [_data, _status, xhr] = event.detail;
-            alert("OH FUCK DEMON - " + JSON.parse(xhr.responseText)["message"]);
+//             alert("ERROR - " + JSON.parse(xhr.responseText)["message"]);
         });
     })
 });
