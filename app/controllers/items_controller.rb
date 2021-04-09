@@ -11,4 +11,13 @@ class ItemsController < ApplicationController
       redirect_to list_path(@list), notice: @item.errors.full_messages.join(", ")
     end
   end
+
+  def destroy
+    if @item = Item.find_by(id: params[:id])
+      @item.destroy
+      redirect_to root_path, notice: "Item deleted"
+    else
+      redirect_back(fallback_location: root_path, notice: "Item not found")
+    end
+  end
 end

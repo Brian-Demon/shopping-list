@@ -2,6 +2,6 @@
   <h1><%= "#{current_user.username}'s Lists" %></h1>
 </div>
 
-<div class="row pt-4 text-center">
+<div class="row pt-4 text-center col-12 offset-2">
   <%= render "lists", collection: current_user.lists %>
 </div>
