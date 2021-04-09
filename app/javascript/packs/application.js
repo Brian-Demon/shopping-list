@@ -12,3 +12,23 @@ import "bootstrap"
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
+
+
+window.addEventListener("load", () => {
+  const elements = document.querySelectorAll(".list-item-bought-toggle");
+    elements.forEach((element) => {
+        element.addEventListener("ajax:success", (event) => {
+            const [_data, _status, xhr] = event.detail;
+            let row = element.closest("tr");
+            if (element.checked) {
+                row.classList.add("item-bought");
+            } else {
+                row.classList.remove("item-bought");
+            }
+        });
+        element.addEventListener("ajax:error", (event) => {
+            const [_data, _status, xhr] = event.detail;
+//             alert("ERROR - " + JSON.parse(xhr.responseText)["message"]);
+        });
+    })
+});

@@ -47,13 +47,8 @@
       <% end %>
     </div>
   </div>
-  <div class="row">
-    <div class="col-3 offset-5 the-list">
-      <% list.items.each do |item| %>
-        <div class="card border-dark m-4 text-center list-item">
-          <%= item.name %>, <%= item.person %>, <%= item.department %>
-        </div>
-      <% end %>
-    </div>
+  <div class="row text-center">
+    <h3>Items</h3>
+    <%= render "items_table", list: list, index: 0 %>
   </div>
 </div>
