@@ -5,7 +5,11 @@ class ItemsController < ApplicationController
     @list = List.find_by(id: params[:list_id])
     @item = @list.items.new(name: params[:name].downcase.camelize, person: params[:person].downcase.camelize, department: params[:department].downcase.camelize)
 
-    if @item.save
+    if @item.valid?
+      @item.name = params[:name]
+      @item.person = params[:person]
+      @item.department = params[:department]
+      @item.save
       redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}"
     else
       redirect_to list_path(@list), notice: @item.errors.full_messages.join(", ")
