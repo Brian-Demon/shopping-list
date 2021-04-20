@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   
   def create
     @list = List.find_by(id: params[:list_id])
-    @item = @list.items.new(name: params[:name], person: params[:person], department: params[:department])
+    @item = @list.items.new(name: params[:name].downcase.camelize, person: params[:person].downcase.camelize, department: params[:department].downcase.camelize)
 
     if @item.save
       redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}"
