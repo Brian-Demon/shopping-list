@@ -1,0 +1,49 @@
+#!/usr/bin/env ruby
+
+def start_selenium
+  system("docker-compose up -d")
+end
+
+def wait_for_selenium_ready
+  desired_count  = `docker-compose ps -q | wc -l`
+  healthy_count  = ""
+
+  while healthy_count != desired_count do
+    sleep 0.5
+    healthy_count = `docker-compose ps --filter status=healthy -q | wc -l`
+  end
+end
+
+def run_system_tests
+  start_selenium
+  wait_for_selenium_ready
+  exec("rails test:system")
+end
+
+def run_unit_tests
+  exec("rails test")
+end
+
+def run_all_tests
+  start_selenium
+  wait_for_selenium_ready
+  exec("rails test:all")
+end
+
+def run_test test_name
+  start_selenium
+  wait_for_selenium_ready
+  exec("rails test #{test_name}")
+end
+
+case ARGV[0]
+when "system"
+  run_system_tests
+when "unit"
+  run_unit_tests
+when "all"
+  run_all_tests
+else
+  run_test ARGV[0]
+end
+
