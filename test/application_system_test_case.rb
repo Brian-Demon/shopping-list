@@ -11,6 +11,7 @@ class ApplicationSystemTestCase < ActionDispatch::SystemTestCase
   def setup
     Capybara.server_host = "0.0.0.0"
     Capybara.server = :puma, { Threads: "1:1" }
+    Capybara.always_include_port = true
     Capybara.app_host = "http://host.docker.internal:#{Capybara.current_session.server.port}"
     super
   end
