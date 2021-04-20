@@ -22,8 +22,8 @@ class ItemsTest < ApplicationSystemTestCase
     fill_in("Person:", with: "Brian")
     fill_in("Department:", with: "Produce")
     click_on "Add Item"
-    assert_selector ".the-list .list-item", count: 1
-    within ".the-list" do
+    assert_selector ".items-table-item", count: 1
+    within ".items-table-item" do
       assert_text "Bananas"
     end
   end
@@ -69,6 +69,20 @@ class ItemsTest < ApplicationSystemTestCase
     create_previous_shopping_list! user
     list = user.lists.create(name: "Shopping Place")
     visit list_path(list)
+    assert_selector "#item_department_datalist_options option", count: 2, visible: false
+    assert_selector "#item_department_datalist_options option", text: "Produce", visible: false
+    assert_selector "#item_department_datalist_options option", text: "Alcohol", visible: false
+  end
+
+  test "logged in user cannot add item when name finds a case insensitive match" do
+    login!
+    user = User.find_by(uid: "31415")
+    create_previous_shopping_list! user
+    list = user.lists.create(name: "Shopping Place")
+    visit list_path(list)
+    fill_in("Item name:", with: "BaNaNas")
+    fill_in("Person:", with: "Brian")
+    fill_in("Department:", with: "Produce")
     assert_selector "#item_department_datalist_options option", count: 2, visible: false
     assert_selector "#item_department_datalist_options option", text: "Produce", visible: false
     assert_selector "#item_department_datalist_options option", text: "Alcohol", visible: false
