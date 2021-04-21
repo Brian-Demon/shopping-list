@@ -9,8 +9,8 @@ module ListsHelper
       "aria-controls" => list.id 
     }
     link_to("#list-#{list.id}", options) do
-      list_name = content_tag :div, list.name, class: "me-auto"
-      item_count = content_tag :span, list.items.count, class: "badge bg-primary rounded-pill"
+      list_name = content_tag :div, list.name, class: "me-auto list-name"
+      item_count = content_tag :span, list.items.count, class: "badge bg-primary rounded-pill item-count"
 
       list_name + item_count
     end

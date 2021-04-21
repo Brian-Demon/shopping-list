@@ -31,10 +31,10 @@ class ListsTest < ApplicationSystemTestCase
     list = user.lists.create(name: "Shopping Place")
     list.items.create(name: "Bananas", person: "Person", department: "Produce")
     visit root_path
-    assert_selector ".shopping-list", count: 1
-    assert_css ".shopping-list .card-title", text: "Shopping Place"
-    within ".shopping-list .item-count" do
-      assert_text "Items: 1"
+    assert_selector ".items-table-item", count: 1
+    assert_css ".list-group-item .list-name", text: "Shopping Place"
+    within "#list-#{list.id}-list .item-count" do
+      assert_text "1"
     end
   end
 
@@ -45,9 +45,7 @@ class ListsTest < ApplicationSystemTestCase
     list.items.create(name: "Bananas", person: "Person", department: "Produce")
     visit root_path
     assert_selector ".shopping-list", count: 1
-    within ".shopping-list" do
-      click_on "Edit List"
-    end
+    click_link("edit-list-#{list.id}")
   end
 
   test "logged in user can delete a list" do
@@ -56,10 +54,8 @@ class ListsTest < ApplicationSystemTestCase
     list = user.lists.create(name: "Shopping Place")
     list.items.create(name: "Bananas", person: "Person", department: "Produce")
     visit root_path
-    assert_selector ".shopping-list", count: 1
-    within ".shopping-list" do
-      click_on "Edit List"
-    end
+    assert_selector ".items-table-item", count: 1
+    click_link("edit-list-#{list.id}")
     accept_confirm do
       click_link 'Delete List'
     end

@@ -8,7 +8,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install Ruby
-      uses: actions/setup-ruby@v1
+      uses: ruby/setup-ruby@v1
       with:
         ruby-version: 3.0.0
     - name: Install Bundler
@@ -25,5 +25,5 @@ jobs:
         rails db:create
         rails db:migrate
         yarn --frozen-lockfile
-    - name: Run Unit Tests
-      run: rails test
+    - name: Run Tests
+      run: bin/test unit
