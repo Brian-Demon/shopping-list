@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+MAX_WAIT_SECONDS = 60
+
 def start_selenium
   system("docker-compose up -d")
 end
@@ -7,10 +9,17 @@ end
 def wait_for_selenium_ready
   desired_count  = `docker-compose ps -q | wc -l`
   healthy_count  = ""
+  timeout = 0
 
   while healthy_count != desired_count do
-    sleep 0.5
-    healthy_count = `docker-compose ps --filter status=healthy -q | wc -l`
+    if timeout > MAX_WAIT_SECONDS
+      puts "Timed out waiting for Selenium to be ready!"
+      exit 1
+    else
+      healthy_count = `docker-compose ps --filter status=healthy -q | wc -l`
+      sleep 0.5
+      timeout += 0.5
+    end
   end
 end
 
