@@ -25,5 +25,5 @@ jobs:
         rails db:create
         rails db:migrate
         yarn --frozen-lockfile
-    - name: Run Unit Tests
-      run: rails test
+    - name: Run Tests
+      run: bin/test unit
