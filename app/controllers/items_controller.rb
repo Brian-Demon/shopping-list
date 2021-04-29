@@ -18,7 +18,7 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find_by(id: params[:id])
-    if @item.update(bought: params[:bought])
+    if @item.update(item_params)
       respond_to do |format|
         format.html { redirect_to @item.list, notice: "Item updated" }
         format.json { render json: { message: "Item updated", item: @item.attributes } }
@@ -38,5 +38,9 @@ class ItemsController < ApplicationController
     else
       redirect_back(fallback_location: root_path, notice: "Item not found")
     end
+  end
+
+  def item_params
+    params.permit(:bought, :name, :person, :department)
   end
 end
