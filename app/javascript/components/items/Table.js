@@ -1,5 +1,6 @@
 import React from "react"
 import PropTypes from "prop-types"
+import EditableField from "./EditableField"
 
 class ItemRow extends React.Component {
   constructor(props) {
@@ -17,9 +18,12 @@ class ItemRow extends React.Component {
     return (
       <tr className={rowClasses}>
         <th scope="row">{this.props.index + 1}</th> 
-        <td>{this.state.item.name}</td>
-        <td>{this.state.item.person}</td>
-        <td>{this.state.item.department}</td>
+        {/* <td>{this.state.item.name}</td> */}
+        <td><EditableField id={this.state.item.id} field="name" text={this.state.item.name} csrf={this.props.csrf} /></td>
+        {/* <td>{this.state.item.person}</td> */}
+        <td><EditableField id={this.state.item.id} field="person" text={this.state.item.person} csrf={this.props.csrf} /></td>
+        {/* <td>{this.state.item.department}</td> */}
+        <td><EditableField id={this.state.item.id} field="department" text={this.state.item.department} csrf={this.props.csrf} /></td>
         <td><input type="checkbox" value="1" selected={selected} id={checkboxId} onClick={() => this.toggleBought()} /></td>
       </tr>
     );
