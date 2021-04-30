@@ -14,15 +14,12 @@
       <tr class="items-table-item <%= item.bought ? "item-bought" : "" %>">
         <th scope="row"><%= index + 1 %></th>
         <td>
-          <!--<%= item.name %>-->
           <%= react_component("items/EditableField", { id: item.id, field: "name", text: item.name, csrf: form_authenticity_token }) %>
         </td>
         <td>
-          <!--<%= item.person %>-->
           <%= react_component("items/EditableField", { id: item.id, field: "person", text: item.person, csrf: form_authenticity_token }) %>
         </td>
         <td>
-          <!--<%= item.department %>-->
           <%= react_component("items/EditableField", { id: item.id, field: "department", text: item.department, csrf: form_authenticity_token }) %>
         </td>
         <td>
