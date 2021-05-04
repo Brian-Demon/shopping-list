@@ -36,9 +36,10 @@ const useSortableData = (items, config = null) => {
 };
 
 const ItemRow = (props) => {
-  const item = props.item;
+  const [state, setState] = React.useState({ item: props.item });
+  const item = state.item;
   const bought = item.bought ? "item-bought" : "";
-  const selected = item.bought ? "selected" : "";
+  const checked = item.bought ? "checked" : "";
   const rowClasses = `items-table-item ${bought}`;
   const checkboxId = "item_bought_" + item.id;
 
@@ -63,7 +64,7 @@ const ItemRow = (props) => {
       <td><EditableField id={item.id} field="name" text={item.name} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
-      <td><input type="checkbox" value="1" selected={selected} id={checkboxId} onClick={() => toggleBought(item)} /></td>
+      <td><input type="checkbox" value="1" checked={checked} id={checkboxId} onChange={() => toggleBought(item)} /></td>
     </tr>
   );
 };
@@ -77,6 +78,10 @@ const Table = (props) => {
     }
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
+  const handleSubmit = () => {
+    
+  }
+
   return (
     <React.Fragment>
       <table className="table items-table">
@@ -126,6 +131,23 @@ const Table = (props) => {
             <ItemRow key={item.id} item={item} index={index} csrf={csrf} />
           ))}
         </tbody>
+        <tfoot>
+        <tr className='items-table-item'>
+          <th scope="row">New Item</th>
+            <td>
+              <input name="itemNameField" placeholder="Item Name" list="item_name_datalist_options"/>
+            </td>
+            <td>
+              <input name="itemPersonField" placeholder="Person Name" list="item_person_datalist_options"/>
+            </td>
+            <td>
+              <input name="itemDepartmentField" placeholder="Department Name" list="item_department_datalist_options"/>
+            </td>
+            <td>
+              <button className="btn btn-primary btn-sm" onClick={handleSubmit}>Add Item</button>
+            </td>
+          </tr>
+        </tfoot>
       </table>
     </React.Fragment>
   );
