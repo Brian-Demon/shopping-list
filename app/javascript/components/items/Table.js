@@ -87,7 +87,7 @@ const Table = (props) => {
               <button
                 type="button"
                 onClick={() => requestSort("name")}
-                className={getClassNamesFor("name")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("name")}
               >
                 Item
               </button>
@@ -96,7 +96,7 @@ const Table = (props) => {
               <button
                 type="button"
                 onClick={() => requestSort("person")}
-                className={getClassNamesFor("person")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("person")}
               >
                 Person
               </button>
@@ -105,7 +105,7 @@ const Table = (props) => {
               <button
                 type="button"
                 onClick={() => requestSort("department")}
-                className={getClassNamesFor("department")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("department")}
               >
                 Department
               </button>
@@ -114,7 +114,7 @@ const Table = (props) => {
               <button
                 type="button"
                 onClick={() => requestSort("bought")}
-                className={getClassNamesFor("bought")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("bought")}
               >
                 Bought
               </button>
