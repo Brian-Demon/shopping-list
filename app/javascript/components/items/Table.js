@@ -32,7 +32,7 @@ const useSortableData = (items, config = null) => {
     setSortConfig({ key, direction });
   };
 
-  return { items: sortedItems, requestSort, sortConfig };
+  return { items, sortedItems, requestSort, sortConfig };
 };
 
 const ItemRow = (props) => {
@@ -71,14 +71,42 @@ const ItemRow = (props) => {
 
 const Table = (props) => {
   const csrf = props.csrf;
-  const { items, requestSort, sortConfig } = useSortableData(props.items);
+  const { items, requestSort, sortConfig, setSortConfig } = useSortableData(props.items);
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
       return;
     }
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
-  const handleSubmit = () => {
+  const handleSubmit = (e) => {
+    console.log(e)
+    const nameField = e.target.closest("tr").querySelector("input[name=itemNameField");
+    const personField = e.target.closest("tr").querySelector("input[name=itemPersonField");
+    const departmentField = e.target.closest("tr").querySelector("input[name=itemDepartmentField");
+    const data = {
+      list_id: props.id,
+      name: nameField.value,
+      person: e.target.closest("tr").querySelector("input[name=itemPersonField").value,
+      department: e.target.closest("tr").querySelector("input[name=itemDepartmentField").value
+    };
+    fetch("/items/", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": props.csrf,
+      }
+    })
+    .then(response => response.json())
+    .then(json_response => {
+      data.id = json_response.id;
+      items.push(data);
+      requestSort("name");
+      nameField.value = "";
+      personField.value = "";
+      departmentField.value = "";
+    });
     
   }
 

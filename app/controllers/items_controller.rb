@@ -10,9 +10,15 @@ class ItemsController < ApplicationController
       @item.person = params[:person]
       @item.department = params[:department]
       @item.save
-      redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}"
+      respond_to do |format|
+        format.html { redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}" }
+        format.json { render json: { message: "Item Created", id: @item.id } }
+      end
     else
-      redirect_to list_path(@list), notice: @item.errors.full_messages.join(", ")
+      respond_to do |format|
+        format.html { redirect_to list_path(@list), notice: @item.errors.full_messages.join(", ") }
+        format.json { render json: { message: "Could not create item", errors: @item.errors } }
+      end
     end
   end
 
