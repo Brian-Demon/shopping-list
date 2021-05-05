@@ -39,4 +39,13 @@ class ItemsController < ApplicationController
       redirect_back(fallback_location: root_path, notice: "Item not found")
     end
   end
+
+  def remove
+    @items = Item.where(id: params[:item_ids]).each do |item|
+      item.update(deleted_at: Time.now)
+    end
+    respond_to do |format|
+      format.json { render json: { message: "Item(s) removed from list", count: @items.length } }
+    end
+  end
 end
