@@ -102,7 +102,7 @@ const Table = (props) => {
     .then(json_response => {
       data.id = json_response.id;
       items.push(data);
-      requestSort("name");
+      requestSort(sortConfig.key);
       nameField.value = "";
       personField.value = "";
       departmentField.value = "";
