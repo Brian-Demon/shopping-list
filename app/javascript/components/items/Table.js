@@ -20,14 +20,20 @@ const useSortableData = (items, config = null) => {
     return sortableItems;
   }, [items, sortConfig]);
 
-  const requestSort = (key) => {
-    let direction = 'ascending';
+  const requestSort = (key, direction) => {
+    if (direction !== undefined) {
+      setSortConfig({ key, direction });
+      return;
+    }
+    
     if (
       sortConfig &&
       sortConfig.key === key &&
       sortConfig.direction === 'ascending'
     ) {
       direction = 'descending';
+    } else {
+      direction = 'ascending';
     }
     setSortConfig({ key, direction });
   };
@@ -71,7 +77,7 @@ const ItemRow = (props) => {
 
 const Table = (props) => {
   const csrf = props.csrf;
-  const { items, requestSort, sortConfig, setSortConfig } = useSortableData(props.items);
+  const { items, sortedItems, requestSort, sortConfig } = useSortableData(props.items, { key: "name", direction: "ascending"});
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
       return;
@@ -102,7 +108,7 @@ const Table = (props) => {
     .then(json_response => {
       data.id = json_response.id;
       items.push(data);
-      requestSort(sortConfig.key);
+      requestSort(sortConfig.key, sortConfig.direction);
       nameField.value = "";
       personField.value = "";
       departmentField.value = "";
@@ -155,7 +161,7 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item, index) => (
+          {sortedItems.map((item, index) => (
             <ItemRow key={item.id} item={item} index={index} csrf={csrf} />
           ))}
         </tbody>
