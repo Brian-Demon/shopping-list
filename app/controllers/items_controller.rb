@@ -10,15 +10,21 @@ class ItemsController < ApplicationController
       @item.person = params[:person]
       @item.department = params[:department]
       @item.save
-      redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}"
+      respond_to do |format|
+        format.html { redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}" }
+        format.json { render json: { message: "Item Created", id: @item.id } }
+      end
     else
-      redirect_to list_path(@list), notice: @item.errors.full_messages.join(", ")
+      respond_to do |format|
+        format.html { redirect_to list_path(@list), notice: @item.errors.full_messages.join(", ") }
+        format.json { render json: { message: "Could not create item", errors: @item.errors } }
+      end
     end
   end
 
   def update
     @item = Item.find_by(id: params[:id])
-    if @item.update(bought: params[:bought])
+    if @item.update(item_params)
       respond_to do |format|
         format.html { redirect_to @item.list, notice: "Item updated" }
         format.json { render json: { message: "Item updated", item: @item.attributes } }
@@ -38,5 +44,9 @@ class ItemsController < ApplicationController
     else
       redirect_back(fallback_location: root_path, notice: "Item not found")
     end
+  end
+
+  def item_params
+    params.permit(:bought, :name, :person, :department)
   end
 end
