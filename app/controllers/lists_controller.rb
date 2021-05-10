@@ -4,7 +4,7 @@ class ListsController < ApplicationController
   def create
     @list = current_user.lists.new(name: params[:name])
     if @list.save
-      redirect_to @list
+      redirect_to root_path
     else
       redirect_to root_path, notice: "Invalid list name"
     end

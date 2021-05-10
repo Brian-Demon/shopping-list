@@ -22,7 +22,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     follow_redirect!
     post lists_path, params: { name: "Shopping Place" }
     list = List.last
-    assert_redirected_to list_path(list)
+    assert_redirected_to root_path
   end
 
   test "invalid list redirects to root path with correct notice" do
