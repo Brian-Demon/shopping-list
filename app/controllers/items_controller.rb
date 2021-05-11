@@ -3,7 +3,7 @@ class ItemsController < ApplicationController
   
   def create
     @list = List.find_by(id: params[:list_id])
-    @item = @list.items.new(name: params[:name].downcase.camelize, person: params[:person].downcase.camelize, department: params[:department].downcase.camelize)
+    @item = @list.items.new(name: params[:name].downcase.camelize, person: params[:person].downcase.camelize, department: params[:department].downcase.camelize, quantity: 1)
 
     if @item.valid?
       @item.name = params[:name]
@@ -47,6 +47,6 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.permit(:bought, :name, :person, :department)
+    params.permit(:bought, :name, :person, :department, :quantity)
   end
 end

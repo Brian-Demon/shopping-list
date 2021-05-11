@@ -1,5 +1,6 @@
 import React from "react"
 import EditableField from "./EditableField"
+import QuantityController from "./QuantityController"
 
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = React.useState(config);
@@ -66,7 +67,7 @@ const ItemRow = (props) => {
 
   return (
     <tr className={rowClasses}>
-      <th scope="row">{props.index + 1}</th>
+      <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf}/></th>
       <td><EditableField id={item.id} field="name" text={item.name} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
@@ -85,7 +86,6 @@ const Table = (props) => {
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
   const handleSubmit = (e) => {
-    console.log(e)
     const nameField = e.target.closest("tr").querySelector("input[name=itemNameField");
     const personField = e.target.closest("tr").querySelector("input[name=itemPersonField");
     const departmentField = e.target.closest("tr").querySelector("input[name=itemDepartmentField");
@@ -121,7 +121,15 @@ const Table = (props) => {
       <table className="table items-table">
         <thead>
           <tr>
-            <th scope="col">#</th>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("quantity")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("quantity")}
+              >
+                Quantity
+                </button>
+            </th>
             <th>
               <button
                 type="button"
@@ -161,7 +169,7 @@ const Table = (props) => {
           </tr>
         </thead>
         <tbody>
-          {sortedItems.map((item, index) => (
+          {sortedItems.map((item, index) => ( 
             <ItemRow key={item.id} item={item} index={index} csrf={csrf} />
           ))}
         </tbody>
