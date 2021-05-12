@@ -207,7 +207,7 @@ const Table = (props) => {
               <button className="btn btn-primary btn-sm" onClick={handleSubmit}>Add Item</button>
             </td>
             <td>
-            <button className="btn btn-danger btn-sm" onClick={() => console.log("TODO")}>Remove Bought</button>
+            {/* <button className="btn btn-danger btn-sm" onClick={() => console.log("TODO")}>Remove Bought</button> */}
             </td>
           </tr>
         </tfoot>
