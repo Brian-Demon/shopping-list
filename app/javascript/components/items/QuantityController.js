@@ -23,7 +23,7 @@ const QuantityController = (props) => {
     <React.Fragment>
       <div className="btn-group" role="group" aria-label="Item Quantity">
         <button type="button" className="btn btn-danger btn-sm" onClick={() => updateQuantity(-1)}>-</button>
-        <button type="button" className="btn btn-dark btn-sm">{selectedItem.quantity}</button>
+        <button type="button" disabled className="btn btn-dark btn-sm">{selectedItem.quantity}</button>
         <button type="button" className="btn btn-success btn-sm" onClick={() => updateQuantity(1)}>+</button>
       </div>
     </React.Fragment>

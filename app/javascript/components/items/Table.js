@@ -43,27 +43,11 @@ const useSortableData = (items, config = null) => {
 };
 
 const ItemRow = (props) => {
-  const [state, setState] = React.useState({ item: props.item });
-  const item = state.item;
+  const item = props.item;
   const bought = item.bought ? "item-bought" : "";
   const checked = item.bought ? "checked" : "";
   const rowClasses = `items-table-item ${bought}`;
   const checkboxId = "item_bought_" + item.id;
-
-  function toggleBought(item) {
-    const toggleItem = item;
-    toggleItem.bought = !toggleItem.bought;
-    const data = { bought: toggleItem.bought };
-    fetch("/items/" + toggleItem.id, {
-      method: "PUT",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "X-CSRF-Token": props.csrf,
-      }
-    }).then(response => setState({ item: toggleItem }));
-  };
 
   return (
     <tr className={rowClasses}>
@@ -71,7 +55,8 @@ const ItemRow = (props) => {
       <td><EditableField id={item.id} field="name" text={item.name} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
-      <td><input type="checkbox" value="1" checked={checked} id={checkboxId} onChange={() => toggleBought(item)} /></td>
+      <td><button className="btn btn-danger btn-sm" onClick={() => props.removeItem(item)}>Remove</button></td>
+      <td><input type="checkbox" value="1" checked={checked} id={checkboxId} onChange={() => props.toggleBought(item)} /></td>
     </tr>
   );
 };
@@ -93,7 +78,8 @@ const Table = (props) => {
       list_id: props.id,
       name: nameField.value,
       person: e.target.closest("tr").querySelector("input[name=itemPersonField").value,
-      department: e.target.closest("tr").querySelector("input[name=itemDepartmentField").value
+      department: e.target.closest("tr").querySelector("input[name=itemDepartmentField").value,
+      quantity: 1
     };
     fetch("/items/", {
       method: "POST",
@@ -114,6 +100,37 @@ const Table = (props) => {
       departmentField.value = "";
     });
     
+  }
+
+  const toggleBought = (item) => {
+    const toggleItem = items[items.indexOf(item)];
+    toggleItem.bought = !toggleItem.bought;
+    const data = { bought: toggleItem.bought };
+    fetch("/items/" + toggleItem.id, {
+      method: "PUT",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": props.csrf,
+      }
+    }).then(response => {
+      requestSort(sortConfig.key, sortConfig.direction);
+    });
+  };
+
+  const removeItem = (item) => {
+    items.splice(items.indexOf(item), 1)
+    fetch("/items/" + item.id + "/remove", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": props.csrf,
+      }
+    }).then(response => {
+      requestSort(sortConfig.key, sortConfig.direction);
+    });
   }
 
   return (
@@ -157,6 +174,7 @@ const Table = (props) => {
                 Department
               </button>
             </th>
+            <th></th>
             <th>
               <button
                 type="button"
@@ -170,7 +188,7 @@ const Table = (props) => {
         </thead>
         <tbody>
           {sortedItems.map((item, index) => ( 
-            <ItemRow key={item.id} item={item} index={index} csrf={csrf} />
+            <ItemRow key={item.id} item={item} index={index} csrf={csrf} toggleBought={toggleBought} removeItem={removeItem} />
           ))}
         </tbody>
         <tfoot>
@@ -187,6 +205,9 @@ const Table = (props) => {
             </td>
             <td>
               <button className="btn btn-primary btn-sm" onClick={handleSubmit}>Add Item</button>
+            </td>
+            <td>
+            <button className="btn btn-danger btn-sm" onClick={() => console.log("TODO")}>Remove Bought</button>
             </td>
           </tr>
         </tfoot>

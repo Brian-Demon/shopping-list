@@ -4,7 +4,25 @@ class List < ApplicationRecord
     def active
       where(deleted_at: nil)
     end
-  end 
+  end
 
   validates :name, length: { minimum: 1 }
+
+  def add_item params
+    item = items.new(
+      name: params[:name].downcase.camelize, 
+      person: params[:person].downcase.camelize, 
+      department: params[:department].downcase.camelize, 
+      quantity: 1
+    )
+
+    if item.valid?
+      item.name = params[:name]
+      item.person = params[:person]
+      item.department = params[:department]
+      return item.save
+    else
+      return false
+    end
+  end
 end

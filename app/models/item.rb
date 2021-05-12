@@ -17,4 +17,12 @@ class Item < ApplicationRecord
 
     previous_data
   end
+
+  def remove_from_list
+    update(quantity: 0, deleted_at: Time.now)
+  end
+
+  def add_back_to_list
+    update(quantity: 1, deleted_at: nil)
+  end
 end
