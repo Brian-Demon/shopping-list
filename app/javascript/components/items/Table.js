@@ -188,7 +188,7 @@ const Table = (props) => {
         </thead>
         <tbody>
           {sortedItems.map((item, index) => ( 
-            <ItemRow key={item.id} item={item} index={index} csrf={csrf} toggleBought={toggleBought} removeItem={removeItem} />
+            <ItemRow key={item.id} item={item} csrf={csrf} toggleBought={toggleBought} removeItem={removeItem} />
           ))}
         </tbody>
         <tfoot>
