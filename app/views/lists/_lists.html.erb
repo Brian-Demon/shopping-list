@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="col-4">
+  <div class="col-8 offset-2" >
     <h3>Lists</h3>
     <div class="list-group" id="list-tab" role="tablist">
       <% current_user.lists.each_with_index do |list, index| %>
@@ -7,7 +7,8 @@
       <% end %>
     </div>
   </div>
-
+</div>
+<div class="row mt-4">
   <div class="col-8">
     <div class="tab-content" id="nav-tabContent">
       <%= react_component("items/PreviousDatalists", { previous_item_data: @previous_item_data })%>
