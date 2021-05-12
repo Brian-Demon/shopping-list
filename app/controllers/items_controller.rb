@@ -3,13 +3,14 @@ class ItemsController < ApplicationController
   
   def create
     @list = List.find_by(id: params[:list_id])
-    @item = @list.items.new(name: params[:name].downcase.camelize, person: params[:person].downcase.camelize, department: params[:department].downcase.camelize)
+    result = false
+    if @item = @list.items.find_by(name: params[:name], person: params[:person])
+      result = @item.add_back_to_list
+    else
+      result = @list.add_item(params)
+    end
 
-    if @item.valid?
-      @item.name = params[:name]
-      @item.person = params[:person]
-      @item.department = params[:department]
-      @item.save
+    if result
       respond_to do |format|
         format.html { redirect_to list_path(@list), notice: "#{@item.name} added to the list for #{@item.person}" }
         format.json { render json: { message: "Item Created", id: @item.id } }
@@ -47,6 +48,18 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.permit(:bought, :name, :person, :department)
+    params.permit(:bought, :name, :person, :department, :quantity)
+  end
+
+  def remove
+    if @item = Item.find_by(id: params[:id])
+      if @item.remove_from_list
+        render json: { message: "Item removed" }
+      else
+        render json: { error: "Item could not be removed" }, status: 422
+      end
+    else
+      render json: { error: "Item not found" }, status: 404
+    end
   end
 end

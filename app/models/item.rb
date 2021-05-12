@@ -3,10 +3,11 @@ class Item < ApplicationRecord
   validates :name, presence: true, uniqueness: { scope: [:list_id, :person], message: "is already on the list for this person." }
   validates :person, presence: true
   validates :department, presence: true
+  validates :quantity, numericality: { greater_than_or_equal_to: 0 }
 
   def self.previous_item_data user
     previous_items = Item.joins(:list).where(list: { user: user}).pluck(:name, :person, :department)
-    previous_data = { names: [], people: [], departments: []}
+    previous_data = { names: [], people: [], departments: [] }
     
     previous_items.each do |item|
       previous_data[:names].push(item[0]) unless previous_data[:names].include? item[0]
@@ -15,5 +16,13 @@ class Item < ApplicationRecord
     end
 
     previous_data
+  end
+
+  def remove_from_list
+    update(quantity: 0, deleted_at: Time.now)
+  end
+
+  def add_back_to_list
+    update(quantity: 1, deleted_at: nil)
   end
 end
