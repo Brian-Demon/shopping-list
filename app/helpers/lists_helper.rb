@@ -10,7 +10,7 @@ module ListsHelper
     }
     link_to("#list-#{list.id}", options) do
       list_name = content_tag :div, list.name, class: "me-auto list-name"
-      item_count = content_tag :span, list.items.count, class: "badge bg-primary rounded-pill item-count"
+      item_count = content_tag :span, list.items.active.count, class: "badge bg-primary rounded-pill item-count"
 
       list_name + item_count
     end
