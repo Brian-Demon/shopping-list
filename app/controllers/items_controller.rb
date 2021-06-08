@@ -7,7 +7,8 @@ class ItemsController < ApplicationController
     if @item = @list.items.find_by(name: params[:name], person: params[:person])
       result = @item.add_back_to_list
     else
-      result = @list.add_item(params)
+      @item = @list.add_item(params)
+      result = @item.valid?
     end
 
     if result
