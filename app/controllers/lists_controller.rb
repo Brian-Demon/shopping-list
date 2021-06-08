@@ -32,4 +32,15 @@ class ListsController < ApplicationController
       redirect_back(fallback_location: root_path, notice: "List not found")
     end
   end
+
+  def remove_bought
+    if @list = current_user.lists.find_by(id: params[:id])
+      @list.items.active.bought.each do |item|
+        item.remove_from_list
+      end
+      render json: { message: "Bought items removed" }
+    else
+      render json: { error: "List not found" }, status: 404
+    end
+ end
 end
