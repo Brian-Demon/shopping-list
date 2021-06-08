@@ -4,6 +4,9 @@ class List < ApplicationRecord
     def active
       where(deleted_at: nil)
     end
+    def bought
+      where(bought: true)
+    end
   end
 
   validates :name, length: { minimum: 1 }
@@ -20,9 +23,9 @@ class List < ApplicationRecord
       item.name = params[:name]
       item.person = params[:person]
       item.department = params[:department]
-      return item.save
-    else
-      return false
+      item.save
     end
+
+    item
   end
 end

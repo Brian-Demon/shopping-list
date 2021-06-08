@@ -1,9 +1,6 @@
 require "test_helper"
 
 class ListsControllerTest < ActionDispatch::IntegrationTest
-  # test "the truth" do
-  #   assert true
-  # end
   setup do
     List.destroy_all
     Rails.application.env_config["omniauth.auth"] = OmniAuth.config.mock_auth[:google_oauth2]
@@ -89,5 +86,22 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
     delete list_path(list)
     assert_redirected_to root_path
     assert_equal "You must be signed in to do that.", flash[:notice]
+  end
+
+  test "bought items are removed from a list" do
+    post "/auth/google_oauth2"
+    follow_redirect!
+    list = User.last.lists.create(name: "Shopping Place")
+    list.items.create(
+      list_id: 1,
+      name: "item",
+      person: "person",
+      department: "department",
+      bought: true,
+      quantity: 0
+    )
+    assert_nil list.items.last.deleted_at
+    post "/lists/1/remove_bought"
+    refute_nil list.items.last.deleted_at
   end
 end

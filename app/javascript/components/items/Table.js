@@ -51,12 +51,11 @@ const ItemRow = (props) => {
 
   return (
     <tr className={rowClasses}>
-      <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf}/></th>
+      <td><input type="checkbox" value="1" checked={checked} id={checkboxId} onChange={() => props.toggleBought(item)} /></td>
       <td><EditableField id={item.id} field="name" text={item.name} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
-      <td><button className="btn btn-danger btn-sm" onClick={() => props.removeItem(item)}>Remove</button></td>
-      <td><input type="checkbox" value="1" checked={checked} id={checkboxId} onChange={() => props.toggleBought(item)} /></td>
+      <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf}/></th>
     </tr>
   );
 };
@@ -71,9 +70,9 @@ const Table = (props) => {
     return sortConfig.key === name ? sortConfig.direction : undefined;
   };
   const handleSubmit = (e) => {
-    const nameField = e.target.closest("tr").querySelector("input[name=itemNameField");
-    const personField = e.target.closest("tr").querySelector("input[name=itemPersonField");
-    const departmentField = e.target.closest("tr").querySelector("input[name=itemDepartmentField");
+    const nameField = e.target.closest("tr").querySelector("input[name=itemNameField]");
+    const personField = e.target.closest("tr").querySelector("input[name=itemPersonField]");
+    const departmentField = e.target.closest("tr").querySelector("input[name=itemDepartmentField]");
     const data = {
       list_id: props.id,
       name: nameField.value,
@@ -99,6 +98,25 @@ const Table = (props) => {
       personField.value = "";
       departmentField.value = "";
     });
+  }
+
+  const handleRemoveBought = () => {
+    fetch("/lists/" + props.id + "/remove_bought", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": props.csrf,
+      }
+    }).then(response => {
+      for (var idx = items.length - 1; idx >= 0; idx--) {
+        if(items[idx].bought) {
+          items.splice(items[idx], 1);
+        }
+      }
+
+      requestSort(sortConfig.key, sortConfig.direction);
+    });
     
   }
 
@@ -117,7 +135,7 @@ const Table = (props) => {
     }).then(response => {
       requestSort(sortConfig.key, sortConfig.direction);
     });
-  };
+  }
 
   const removeItem = (item) => {
     items.splice(items.indexOf(item), 1)
@@ -138,6 +156,15 @@ const Table = (props) => {
       <table className="table items-table">
         <thead>
           <tr>
+            <th>
+              <button
+                type="button"
+                onClick={() => requestSort("bought")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("bought")}
+              >
+                Bought
+              </button>
+            </th>
             <th>
               <button
                 type="button"
@@ -174,16 +201,6 @@ const Table = (props) => {
                 Department
               </button>
             </th>
-            <th></th>
-            <th>
-              <button
-                type="button"
-                onClick={() => requestSort("bought")}
-                className={"btn btn-primary btn-sm " + getClassNamesFor("bought")}
-              >
-                Bought
-              </button>
-            </th>
           </tr>
         </thead>
         <tbody>
@@ -193,7 +210,9 @@ const Table = (props) => {
         </tbody>
         <tfoot>
         <tr className='items-table-item'>
-          <th scope="row">New Item</th>
+            <td>
+              <button className="btn btn-warning btn-sm" onClick={handleRemoveBought}>Remove Bought</button>
+            </td>
             <td>
               <input name="itemNameField" placeholder="Item Name" list="item_name_datalist_options"/>
             </td>
@@ -204,11 +223,9 @@ const Table = (props) => {
               <input name="itemDepartmentField" placeholder="Department Name" list="item_department_datalist_options"/>
             </td>
             <td>
-              <button className="btn btn-primary btn-sm" onClick={handleSubmit}>Add Item</button>
+              <button className="btn btn-success btn-sm" onClick={handleSubmit}>Add Item</button>
             </td>
-            <td>
-            {/* <button className="btn btn-danger btn-sm" onClick={() => console.log("TODO")}>Remove Bought</button> */}
-            </td>
+            
           </tr>
         </tfoot>
       </table>

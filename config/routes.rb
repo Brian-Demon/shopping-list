@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   get "/auth/:provider/callback" => "sessions#create"
   get "/logout" => "sessions#destroy", :as => :logout
 
-  resources :lists
+  resources :lists do
+    post :remove_bought, on: :member
+  end
   resources :items do
     post :remove, on: :member
   end
