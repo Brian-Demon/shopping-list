@@ -56,7 +56,6 @@ const ItemRow = (props) => {
       <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
       <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf}/></th>
-      {/* <td><button className="btn btn-danger btn-sm" onClick={() => props.removeItem(item)}>Remove</button></td> */}
     </tr>
   );
 };
