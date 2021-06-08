@@ -23,6 +23,6 @@ class Item < ApplicationRecord
   end
 
   def add_back_to_list
-    update(quantity: 1, deleted_at: nil)
+    update(quantity: 1, deleted_at: nil, bought: false)
   end
 end
