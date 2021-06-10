@@ -150,7 +150,7 @@ const Table = (props) => {
       requestSort(sortConfig.key, sortConfig.direction);
     });
   }
-
+  const listPresent = items.length > 0
   return (
     <React.Fragment>
       <table className="table items-table">
@@ -211,7 +211,11 @@ const Table = (props) => {
         <tfoot>
         <tr className='items-table-item'>
             <td>
-              <button className="btn btn-warning btn-sm" onClick={handleRemoveBought}>Remove Bought</button>
+              {listPresent ? (
+                <button className="btn btn-warning btn-sm" onClick={handleRemoveBought}>Remove Bought</button>
+              ) : (
+                ""
+              )}
             </td>
             <td>
               <input name="itemNameField" placeholder="Item Name" list="item_name_datalist_options"/>
