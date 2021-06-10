@@ -42,10 +42,14 @@ class ItemsController < ApplicationController
   def destroy
     if @item = Item.find_by(id: params[:id])
       @item.destroy
-      redirect_to root_path, notice: "Item deleted"
+      redirect_to items_path, notice: "Item deleted"
     else
       redirect_back(fallback_location: root_path, notice: "Item not found")
     end
+  end
+
+  def index
+    @items = Item.joins(:list).where(list: { user: current_user })
   end
 
   def item_params
