@@ -1,0 +1,47 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">Person</th>
+      <th scope="col">Department</th>
+      <th scope="col">DELETE FOREVER
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <td>
+           <%= react_component(
+             "items/EditableField",
+             { id: item.id,
+              field: "name",
+              text: item.name,
+              csrf: form_authenticity_token 
+            }) %>
+        </td>
+        <td>
+           <%= react_component(
+             "items/EditableField",
+             { id: item.id,
+              field: "person",
+              text: item.person,
+              csrf: form_authenticity_token 
+            }) %>
+        </td>
+        <td>
+           <%= react_component(
+             "items/EditableField",
+             { id: item.id,
+              field: "department",
+              text: item.department,
+              csrf: form_authenticity_token 
+            }) %>
+        </td>
+        <td>
+          <%= link_to image_tag("x.png", width: 16), item, method: :delete %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
