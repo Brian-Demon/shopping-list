@@ -5,7 +5,7 @@ const QuantityController = (props) => {
   const selectedItem = props.item;
   const updateQuantity = (amount) => {
     const newQuantity = selectedItem.quantity + amount;
-    if (newQuantity == 0) return;
+    if (newQuantity == -1) return;
     selectedItem.quantity = newQuantity;
     const data = { quantity: selectedItem.quantity };
     fetch("/items/" + props.item.id, {
@@ -19,12 +19,24 @@ const QuantityController = (props) => {
     }).then(response => setState({ item: selectedItem }));
   }
 
+  const readyForDelete = selectedItem.quantity == 0;
+  let buttonGroup;
+  if (selectedItem.quantity > 0) { 
+      buttonGroup = <React.Fragment>
+            <button type="button" className="btn btn-danger btn-sm" onClick={() => updateQuantity(-1)}>- </button>
+            <button type="button" disabled className="btn btn-dark btn-sm">{selectedItem.quantity}</button>
+            <button type="button" className="btn btn-success btn-sm" onClick={() => updateQuantity(1)}>+</button>
+          </React.Fragment>;
+  } else {
+      buttonGroup = <React.Fragment>
+            <button type="button" className="btn btn-danger btn-sm" onClick={() => props.removeItem(props.item)}>Remove</button>
+            <button type="button" className="btn btn-secondary btn-sm" onClick={() => updateQuantity(1)}>Cancel</button>
+          </React.Fragment>;
+  }
   return (
     <React.Fragment>
       <div className="btn-group" role="group" aria-label="Item Quantity">
-        <button type="button" className="btn btn-danger btn-sm" onClick={() => updateQuantity(-1)}>-</button>
-        <button type="button" disabled className="btn btn-dark btn-sm">{selectedItem.quantity}</button>
-        <button type="button" className="btn btn-success btn-sm" onClick={() => updateQuantity(1)}>+</button>
+        {buttonGroup}
       </div>
     </React.Fragment>
   );
