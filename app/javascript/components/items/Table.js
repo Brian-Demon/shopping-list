@@ -55,7 +55,7 @@ const ItemRow = (props) => {
       <td><EditableField id={item.id} field="name" text={item.name} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
       <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
-      <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf}/></th>
+      <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf} removeItem={props.removeItem}/></th>
     </tr>
   );
 };
@@ -138,7 +138,7 @@ const Table = (props) => {
   }
 
   const removeItem = (item) => {
-    items.splice(items.indexOf(item), 1)
+    items.splice(items.indexOf(item), 1);
     fetch("/items/" + item.id + "/remove", {
       method: "POST",
       headers: {
@@ -150,7 +150,8 @@ const Table = (props) => {
       requestSort(sortConfig.key, sortConfig.direction);
     });
   }
-  const listPresent = items.length > 0
+
+  const listPresent = items.length > 0;
   return (
     <React.Fragment>
       <table className="table items-table">
