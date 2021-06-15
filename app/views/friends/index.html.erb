@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Friends</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th colspan="1"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% current_user.friends.each do |friend| %>
+      <tr>
+        <td><%= friend.email %></td>
+        <td><%= button_to 'Unfriend', friend, method: :delete, data: { confirm: "UNFRIEND: #{friend.email}\n\nAre you sure?" } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Friend', new_friend_path %>
