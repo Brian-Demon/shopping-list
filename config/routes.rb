@@ -12,4 +12,6 @@ Rails.application.routes.draw do
   resources :items do
     post :remove, on: :member
   end
+
+  resources :friends
 end
