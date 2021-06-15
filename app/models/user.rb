@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :lists, dependent: :destroy
+  has_many :friends, dependent: :destroy
   validates :provider, presence: true
   validates :uid, presence: true
   validates :username, presence: true
