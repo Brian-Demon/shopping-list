@@ -25,7 +25,7 @@ class FriendsController < ApplicationController
       else
         respond_to do |format|
           if @friend.save
-            format.html { redirect_to @friend, notice: "Friend request sent to #{param_email}" }
+            format.html { redirect_to new_friend_path, notice: "Friend request sent to #{param_email}" }
             format.json { render :show, status: :created, location: @friend }
           else
             format.html { render :new, status: :unprocessable_entity }
