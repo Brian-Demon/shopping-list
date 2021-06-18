@@ -19,7 +19,9 @@
       </div>
 
       <div class="row pt-4 text-center">
-        <%= render "items/items_table", collection: current_user %>
+        <div class="col-5">
+          <%= render "items/items_table", collection: current_user %>
+        </div>
       </div>
       
   <% else %>
