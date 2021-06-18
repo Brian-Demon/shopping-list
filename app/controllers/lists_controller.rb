@@ -42,5 +42,5 @@ class ListsController < ApplicationController
     else
       render json: { error: "List not found" }, status: 404
     end
- end
+  end
 end
