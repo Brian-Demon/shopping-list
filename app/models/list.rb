@@ -1,5 +1,6 @@
 class List < ApplicationRecord
   belongs_to :user
+  has_many :shared_users, class_name: "User", through: :shared_lists
   has_many :items, dependent: :destroy do
     def active
       where(deleted_at: nil)
@@ -8,7 +9,6 @@ class List < ApplicationRecord
       where(bought: true)
     end
   end
-
   validates :name, length: { minimum: 1 }
 
   def add_item params
