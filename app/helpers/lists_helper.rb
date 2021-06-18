@@ -23,8 +23,4 @@ module ListsHelper
   def is_shared_list?(list, user)
     list.user_id != user.id
   end
-
-  def shared_list_reference(shared_list)
-    List.find_by(id: shared_list.list_id)
-  end
 end
