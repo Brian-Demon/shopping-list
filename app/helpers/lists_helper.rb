@@ -9,11 +9,11 @@ module ListsHelper
       "aria-controls" => list.id 
     }
     link_to("#list-#{list.id}", options) do
+      display_name = list.name
       if is_shared_list?(list, current_user)
-        list_name = content_tag :div, list.name + " (shared)", class: "me-auto list-name"
-      else
-        list_name = content_tag :div, list.name, class: "me-auto list-name"
+        display_name << " (shared)"
       end
+      list_name = content_tag :div, display_name, class: "me-auto list-name"
       item_count = content_tag :span, list.items.active.count, class: "badge bg-primary rounded-pill item-count"
 
       list_name + item_count
