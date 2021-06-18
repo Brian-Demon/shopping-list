@@ -8,3 +8,21 @@
     @extend .table-active;
     font-weight: lighter;
 }
+
+.bought-col {
+    width: 90px;
+}
+
+.text-col {
+    width: 175px;
+}
+
+.quantity-col {
+    width: 145px;
+}
+
+.items-table {
+    td, th {
+      padding: 0.1rem 0.1rem !important;
+    }
+  }
