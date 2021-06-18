@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-8 offset-2" >
-    <h3>Lists</h3>
+    <h3>Your Lists</h3>
     <div class="list-group" id="list-tab" role="tablist">
-      <% current_user.lists.each_with_index do |list, index| %>
+      <% @all_lists.each_with_index do |list, index| %>
         <%= list_item(list, index == 0) %>
       <% end %>
     </div>
@@ -12,7 +12,7 @@
   <div class="col-8">
     <div class="tab-content" id="nav-tabContent">
       <%= react_component("items/PreviousDatalists", { previous_item_data: @previous_item_data })%>
-      <% current_user.lists.each_with_index do |list, index| %>
+      <% @all_lists.each_with_index do |list, index| %>
         <%= tag.div class: "shopping-list tab-pane fade show #{index == 0 ? 'active' : ''}", id: "list-#{list.id}" do %>
           <h3>Items <%= link_to image_tag("edit_icon.png", width: 16), edit_list_path(list), class: "edit-list", id: "edit-list-#{list.id}" %></h3>
           <%= react_component("items/Table", { id: list.id, previous_item_data: @previous_item_data, items: list.items.active, csrf: form_authenticity_token }) %>
