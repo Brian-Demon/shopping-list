@@ -1,5 +1,7 @@
 class User < ApplicationRecord
+  has_many :shared_lists
   has_many :lists, dependent: :destroy
+  has_many :user_shared_lists, :through => :shared_lists, class_name: "List", :source => :user
   validates :provider, presence: true
   validates :uid, presence: true
   validates :username, presence: true
