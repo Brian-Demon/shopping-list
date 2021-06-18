@@ -154,10 +154,10 @@ const Table = (props) => {
   const listPresent = items.length > 0;
   return (
     <React.Fragment>
-      <table className="table items-table">
+      <table className="table items-table align-middle">
         <thead>
           <tr>
-            <th>
+            <th class="bought-col">
               <button
                 type="button"
                 onClick={() => requestSort("bought")}
@@ -166,16 +166,7 @@ const Table = (props) => {
                 Bought
               </button>
             </th>
-            <th>
-              <button
-                type="button"
-                onClick={() => requestSort("quantity")}
-                className={"btn btn-primary btn-sm " + getClassNamesFor("quantity")}
-              >
-                Quantity
-                </button>
-            </th>
-            <th>
+            <th class="text-col">
               <button
                 type="button"
                 onClick={() => requestSort("name")}
@@ -184,7 +175,7 @@ const Table = (props) => {
                 Item
               </button>
             </th>
-            <th>
+            <th class="text-col">
               <button
                 type="button"
                 onClick={() => requestSort("person")}
@@ -193,7 +184,7 @@ const Table = (props) => {
                 Person
               </button>
             </th>
-            <th>
+            <th class="text-col">
               <button
                 type="button"
                 onClick={() => requestSort("department")}
@@ -201,6 +192,15 @@ const Table = (props) => {
               >
                 Department
               </button>
+            </th>
+            <th class="quantity-col">
+              <button
+                type="button"
+                onClick={() => requestSort("quantity")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("quantity")}
+              >
+                Quantity
+                </button>
             </th>
           </tr>
         </thead>
