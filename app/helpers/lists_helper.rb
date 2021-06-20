@@ -1,5 +1,5 @@
 module ListsHelper
-  def list_item list, active = false
+  def list_item(list, active = false)
     active_class = active ? "active" : ""
     options = {
       class: "list-group-item list-group-item-action d-flex justify-content-between align-items-start #{active_class}",

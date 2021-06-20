@@ -1,0 +1,10 @@
+<div class="row mt-4 text-center">
+  <div class="tab-content" id="nav-tabContent">
+    <%= react_component("items/PreviousDatalists", { previous_item_data: @previous_item_data })%>
+    <% current_user.lists.each_with_index do |list, index| %>
+      <%= tag.div class: "shopping-list tab-pane fade show #{index == 0 ? 'active' : ''}", id: "list-#{list.id}" do %>
+        <%= react_component("items/Table", { id: list.id, previous_item_data: @previous_item_data, items: list.items.active, csrf: form_authenticity_token }) %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
