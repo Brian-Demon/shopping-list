@@ -19,7 +19,6 @@ const QuantityController = (props) => {
     }).then(response => setState({ item: selectedItem }));
   }
 
-  const readyForDelete = selectedItem.quantity == 0;
   let buttonGroup;
   if (selectedItem.quantity > 0) { 
       buttonGroup = <React.Fragment>
