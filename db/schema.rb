@@ -35,11 +35,11 @@ ActiveRecord::Schema.define(version: 2021_06_21_173151) do
   end
 
   create_table "shared_lists", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "list_id"
     t.boolean "active"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.integer "list_id"
   end
 
   create_table "users", force: :cascade do |t|
