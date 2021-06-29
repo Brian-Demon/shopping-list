@@ -11,13 +11,7 @@ const ListButtons = (props) => {
     buttonGroup = 
     <React.Fragment>
       <div className="btn-group" role="group">
-        <button className="btn btn-warning" onClick={() => setShowEditButton(1)}></button>
-        <button className="btn btn-warning" onClick={() => setShowEditButton(1)}></button>
-        <button className="btn btn-warning" onClick={() => setShowEditButton(1)}></button>
-        <button className="btn btn-warning" onClick={() => setShowEditButton(1)}>Edit</button>
-        <button className="btn btn-warning" onClick={() => setShowEditButton(1)}></button>
-        <button className="btn btn-warning" onClick={() => setShowEditButton(1)}></button>
-        <button className="btn btn-warning" onClick={() => setShowEditButton(1)}></button>
+        <button className="btn btn-warning shadow-none list-edit-button" onClick={() => setShowEditButton(1)}>Edit</button>
       </div>
       
     </React.Fragment>;
@@ -25,18 +19,18 @@ const ListButtons = (props) => {
     buttonGroup = 
     <React.Fragment>
       <div className="btn-group" role="group">
-        <button type="button" className="btn btn-success" onClick={() => shareButtonClicked()}>Share</button>
-        <button type="button" className="btn btn-secondary" onClick={() => setShowEditButton(0)}>Cancel</button>
-        <button type="button" className="btn btn-danger" onClick={() => setShowEditButton(3)}>Delete</button>
+        <button type="button" className="btn btn-success shadow-none" onClick={() => shareButtonClicked()}>Share</button>
+        <button type="button" className="btn btn-secondary shadow-none" onClick={() => setShowEditButton(0)}>Cancel</button>
+        <button type="button" className="btn btn-danger shadow-none" onClick={() => setShowEditButton(3)}>Delete</button>
       </div>
     </React.Fragment>;
   } else if( showEditButton == 3 ){
     buttonGroup = 
     <React.Fragment>
       <div className="btn-group" role="group">
-        <button type="button" className="btn btn-success" onClick={() => confirmDeleteList()}>YES</button>
-        <button type="button" disabled className="btn btn-secondary">Delete?</button>
-        <button type="button" className="btn btn-danger" onClick={() => setShowEditButton(1)}>NO</button>
+        <button type="button" className="btn btn-success shadow-none" onClick={() => confirmDeleteList()}>YES</button>
+        <button type="button" disabled className="btn btn-secondary shadow-none">Delete?</button>
+        <button type="button" className="btn btn-danger shadow-none" onClick={() => setShowEditButton(1)}>NO</button>
       </div>
     </React.Fragment>
   } else {
