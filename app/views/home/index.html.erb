@@ -12,20 +12,22 @@
         </div>
       </div>
 
-      <div class="row pt-4 text-center">
-        <div class="col-9 offset-1">
-          <%= render "lists/lists", collection: current_user.lists %>
+      <% if @all_lists.length > 0 %>
+        <div class="row pt-4 text-center">
+          <div class="col-6 offset-1">
+            <%= render "lists/lists", collection: current_user.lists %>
+          </div>
+          <div class="col-2">
+            <%= render "lists/buttons", collection: current_user.lists %>
+          </div>
         </div>
-        <div class="col-1">
-          <%= render "lists/buttons", collection: current_user.lists %>
-        </div>
-      </div>
 
-      <div class="row pb-4 text-center">
-        <div class="col-5">
-          <%= render "items/items_table", collection: current_user %>
+        <div class="row pb-4 text-center">
+          <div class="col-5">
+            <%= render "items/items_table", collection: current_user %>
+          </div>
         </div>
-      </div>
+      <% end %>
       
   <% else %>
     <div class="call-to-action">

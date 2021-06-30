@@ -301,7 +301,14 @@ label,
   }
 }
 
+// Form Control ==================================================================
 
 .form-control, .form-control:active, .form-control:focus {
   color: $gray-700;
+}
+
+// List Styles ==================================================================
+
+.list-edit-button {
+  width: 13rem;
 }

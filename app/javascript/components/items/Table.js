@@ -157,7 +157,7 @@ const Table = (props) => {
       <table className="table items-table align-middle">
         <thead>
           <tr>
-            <th class="bought-col">
+            <th className="bought-col">
               <button
                 type="button"
                 onClick={() => requestSort("bought")}
@@ -166,7 +166,7 @@ const Table = (props) => {
                 Bought
               </button>
             </th>
-            <th class="text-col">
+            <th className="text-col">
               <button
                 type="button"
                 onClick={() => requestSort("name")}
@@ -175,7 +175,7 @@ const Table = (props) => {
                 Item
               </button>
             </th>
-            <th class="text-col">
+            <th className="text-col">
               <button
                 type="button"
                 onClick={() => requestSort("person")}
@@ -184,7 +184,7 @@ const Table = (props) => {
                 Person
               </button>
             </th>
-            <th class="text-col">
+            <th className="text-col">
               <button
                 type="button"
                 onClick={() => requestSort("department")}
@@ -193,7 +193,7 @@ const Table = (props) => {
                 Department
               </button>
             </th>
-            <th class="quantity-col">
+            <th className="quantity-col">
               <button
                 type="button"
                 onClick={() => requestSort("quantity")}

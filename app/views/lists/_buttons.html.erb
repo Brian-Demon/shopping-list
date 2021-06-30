@@ -1,8 +1,8 @@
 <div class="row">
-  <h3>Del</h3>
+  <h3>Edit</h3>
   <% current_user.lists.each_with_index do |list, index| %>
     <div class="pb-1">
-      <%= button_to "X", "/lists/#{list.id}", method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger"  %>
+      <%= react_component("lists/ListButtons", { list: list, csrf: form_authenticity_token }) %>
     </div>
   <% end %>
 </div>
