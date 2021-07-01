@@ -13,12 +13,9 @@
       </div>
 
       <% if @all_lists.length > 0 %>
-        <div class="row pt-4 text-center">
-          <div class="col-6 offset-1">
-            <%= render "lists/lists", collection: current_user.lists %>
-          </div>
-          <div class="col-2">
-            <%= render "lists/buttons", collection: current_user.lists %>
+        <div class="row pt-4">
+          <div class="col-10 offset-1">
+            <%= react_component("lists/ListGroup", { lists: current_user.lists, csrf: form_authenticity_token  })%>
           </div>
         </div>
 
