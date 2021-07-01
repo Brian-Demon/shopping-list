@@ -21,10 +21,6 @@ const ListGroup = (props) => {
     window.location.reload();
   }
 
-  const getListsLength = () => {
-    console.log("List length: " + lists.length);
-  }
-
   const displayList = (list, index) => {
     let activeClass = "";
     if(index == 0){
@@ -40,7 +36,6 @@ const ListGroup = (props) => {
 
   return (
     <React.Fragment>
-      <button className="btn btn-sm btn-warning" onClick={ () => getListsLength() }>Get Lists Length</button>
       <h3 className="text-center">Lists</h3>
       <div className="list-group">
         {lists.map((list, index) => displayList(list, index))}
