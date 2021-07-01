@@ -14,11 +14,11 @@ const ListGroup = (props) => {
       let id = list.id;
       if( id === listId ){
         newLists.splice(index, 1);
+        setLists(newLists);
         console.log("List: \"" + list.name + "\" removed");
       }
-    });
-
-    setLists(newLists);
+    })
+    window.location.reload();
   }
 
   const getListsLength = () => {
