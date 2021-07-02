@@ -37,7 +37,7 @@ const ListGroup = (props) => {
     <React.Fragment>
       <h3 className="text-center">Lists</h3>
       <div className="list-group">
-        {lists.map((list, index) => displayList(list, index))}
+        {lists.map(displayList)}
       </div>
       <h3 className="text-center">Items</h3>
     </React.Fragment>
