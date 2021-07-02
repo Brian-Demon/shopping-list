@@ -18,7 +18,6 @@ const ListGroup = (props) => {
         console.log("List: \"" + list.name + "\" removed");
       }
     })
-    window.location.reload();
   }
 
   const displayList = (list, index) => {
