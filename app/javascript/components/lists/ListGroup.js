@@ -8,7 +8,7 @@ const ListGroup = (props) => {
   const csrf = props.csrf;
 
   const handleStateChange = ( listId ) => {
-    var newLists = lists;
+    var newLists = [...lists];
 
     newLists.map((list, index) =>{
       let id = list.id;
