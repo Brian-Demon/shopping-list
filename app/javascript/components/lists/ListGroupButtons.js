@@ -5,7 +5,6 @@ const ListGroupButtons = (props) => {
 
   const list = props.list;
   const csrf = props.csrf;
-  const isActive = props.isActive(props.activeClass);
 
   let buttonGroup;
 
@@ -49,7 +48,7 @@ const ListGroupButtons = (props) => {
         "Accept": "application/json",
         "X-CSRF-Token": csrf,
       }
-    }).then(response => props.setState(list.id, isActive));
+    }).then(response => props.setState(list.id));
   }
 
   return (
