@@ -28,9 +28,9 @@ const ListGroup = (props) => {
   }
 
   const displayList = (list, index) => {
-    let activeClass = "";
+    let isActive = false;
     if(index == 0){
-      activeClass = "active";
+      isActive = true;
     }
     return(
       <ListEntry 
@@ -38,8 +38,7 @@ const ListGroup = (props) => {
         list={list}
         csrf={csrf}
         handleStateChange={handleStateChange}
-        activeClass={activeClass}
-        
+        isActive={isActive}
       />
     )
   }
