@@ -34,7 +34,7 @@ class ListsController < ApplicationController
     if @list = current_user.lists.find_by(id: params[:id])
       @list.destroy
       respond_to do |format|
-        format.html { redirect_to root_path(), notice: "List deleted" }
+        format.html { redirect_to root_path, notice: "List deleted" }
         format.json { render json: { message: "List deleted", id: @list.id } }
       end
     else
