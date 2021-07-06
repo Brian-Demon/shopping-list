@@ -4,9 +4,15 @@ class ListsController < ApplicationController
   def create
     @list = current_user.lists.new(name: params[:name])
     if @list.save
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "List created" }
+        format.json { render json: { message: "List created", id: @list.id } }
+      end
     else
-      redirect_to root_path, notice: "Invalid list name"
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "Invalid list name" }
+        format.json { render json: { message: "Invalid list name", id: @list.id } }
+      end
     end
   end
 
@@ -27,9 +33,15 @@ class ListsController < ApplicationController
   def destroy
     if @list = current_user.lists.find_by(id: params[:id])
       @list.destroy
-      redirect_to root_path, notice: "List deleted"
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "List deleted" }
+        format.json { render json: { message: "List deleted", id: @list.id } }
+      end
     else
-      redirect_back(fallback_location: root_path, notice: "List not found")
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: "List not found" }
+        format.json { render json: { message: "List not found", id: @list.id } }
+      end
     end
   end
 
