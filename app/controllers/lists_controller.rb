@@ -39,7 +39,7 @@ class ListsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to root_path(), notice: "List not found" }
+        format.html { redirect_to root_path, notice: "List not found" }
         format.json { render json: { message: "List not found", id: @list.id } }
       end
     end
