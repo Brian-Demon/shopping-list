@@ -10,7 +10,7 @@ class ListsController < ApplicationController
       end
     else
       respond_to do |format|
-        format.html { redirect_to root_path(), notice: "Invalid list name" }
+        format.html { redirect_to root_path, notice: "Invalid list name" }
         format.json { render json: { message: "Invalid list name", id: @list.id } }
       end
     end
