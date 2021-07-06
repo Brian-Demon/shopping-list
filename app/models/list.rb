@@ -10,6 +10,7 @@ class List < ApplicationRecord
     end
   end
   validates :name, length: { minimum: 1 }
+  validates :name, uniqueness: true;
 
   def add_item params
     item = items.new(
