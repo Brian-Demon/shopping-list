@@ -5,7 +5,7 @@ class ListsController < ApplicationController
     @list = current_user.lists.new(name: params[:name])
     if @list.save
       respond_to do |format|
-        format.html { redirect_to root_path(), notice: "List created" }
+        format.html { redirect_to root_path, notice: "List created" }
         format.json { render json: { message: "List created", id: @list.id } }
       end
     else
