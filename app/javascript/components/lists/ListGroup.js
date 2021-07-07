@@ -27,6 +27,11 @@ const ListGroup = (props) => {
     })
   }
 
+  const setState = () => {
+    console.log("State Set");
+    // window.location.reload();
+  }
+
   const displayList = (list, index) => {
     let isActive = false;
     if(index == 0){
@@ -38,6 +43,7 @@ const ListGroup = (props) => {
         list={list}
         csrf={csrf}
         handleStateChange={handleStateChange}
+        setState={setState}
         isActive={isActive}
       />
     )

@@ -22,7 +22,7 @@ const ListEntry = (props) => {
         aria-controls={ariaControls}
         >
         <span className="p-0 m-0 flex-grow-1 me-auto list-name">{list.name}</span>
-        <ListGroupButtons key={list.id} list={list} csrf={csrf} setState={props.handleStateChange} />
+        <ListGroupButtons key={list.id} list={list} csrf={csrf} handleStateChange={props.handleStateChange} setState={props.setState} />
       </a>
     </React.Fragment>
   )

@@ -36,6 +36,19 @@ const ListGroupButtons = (props) => {
 
   const shareClicked = () => {
     console.log("List: " + list.name + " shared with " + document.getElementById("email").value);
+    const data = {
+      list_id: list.id,
+      email: document.getElementById("email").value
+    }
+    fetch("/shared_lists/", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "X-CSRF-Token": csrf,
+      }
+    }).then(response => props.setState());
   }
 
   const confirmDelete = () => {
@@ -48,7 +61,7 @@ const ListGroupButtons = (props) => {
         "Accept": "application/json",
         "X-CSRF-Token": csrf,
       }
-    }).then(response => props.setState(list.id));
+    }).then(response => props.handleStateChange(list.id));
   }
 
   return (
