@@ -48,7 +48,12 @@ const ListGroupButtons = (props) => {
         "Accept": "application/json",
         "X-CSRF-Token": csrf,
       }
-    }).then(response => props.setState());
+    })
+    .then(response => response.json)
+    .then(json_response => {
+      console.log("json_response: " + json_response.message);
+    })
+    .then(response => props.setState());
   }
 
   const confirmDelete = () => {

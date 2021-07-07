@@ -28,7 +28,7 @@ const ListGroup = (props) => {
   }
 
   const setState = () => {
-    console.log("State Set");
+    // console.log("State Set");
     // window.location.reload();
   }
 
