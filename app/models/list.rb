@@ -8,6 +8,9 @@ class List < ApplicationRecord
     def bought
       where(bought: true)
     end
+    def unbought
+      where(bought: false)
+    end
   end
   validates :name, length: { minimum: 1 }
   validates :name, uniqueness: true;
@@ -28,5 +31,24 @@ class List < ApplicationRecord
     end
 
     item
+  end
+
+  def as_json(*)
+    super({
+      only: [:id, :name],
+      include: {
+        items: {
+          only: [
+            :name,
+            :person,
+            :department,
+            :bought
+          ]
+        }
+      }
+      }).merge({
+        unbought_count: items.unbought.count,
+        item_count: items.active.count
+      })
   end
 end
