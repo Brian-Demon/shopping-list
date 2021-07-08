@@ -45,7 +45,7 @@ class ListTest < ActiveSupport::TestCase
     )
     assert_equal(
       {
-        "id"=>980190963,
+        "id"=>list.id,
         "name"=>"Shopping Place",
         "items"=>[
           {
