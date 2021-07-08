@@ -9,10 +9,11 @@ const ListEntry = (props) => {
   const ariaControls = "list-" + list.id;
   const id = ariaControls + "-list";
   const href = "#list-" + list.id;
+  const badgeItemCount = (list.unbought_count) + "/" + (list.item_count);
 
   return (
     <React.Fragment>
-      <a 
+      <a
         key={list.id}
         className={className}
         id={id}
@@ -22,6 +23,9 @@ const ListEntry = (props) => {
         aria-controls={ariaControls}
         >
         <span className="p-0 m-0 flex-grow-1 me-auto list-name">{list.name}</span>
+        <span className="badge bg-primary rounded-pill item-count">
+          <span className="align-middle">{badgeItemCount}</span>
+        </span>
         <ListGroupButtons key={list.id} list={list} csrf={csrf} setState={props.handleStateChange} />
       </a>
     </React.Fragment>
