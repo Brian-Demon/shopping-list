@@ -36,7 +36,16 @@ class List < ApplicationRecord
   def as_json(*)
     super({
       only: [:id, :name],
-      include: :items
+      include: {
+        items: {
+          only: [
+            :name,
+            :person,
+            :department,
+            :bought
+          ]
+        }
+      }
       }).merge({
         unbought_count: items.unbought.count,
         item_count: items.active.count
