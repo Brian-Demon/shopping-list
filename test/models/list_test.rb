@@ -24,7 +24,8 @@ class ListTest < ActiveSupport::TestCase
         "name"=>"Shopping Place",
         "items"=>[],
         :unbought_count=>0,
-        :item_count=>0
+        :item_count=>0,
+        :active=>list.items.active
       },
       list.as_json
     )
