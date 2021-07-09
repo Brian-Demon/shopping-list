@@ -21,7 +21,7 @@ function EditableField(props) {
 
   return (
     <React.Fragment>
-      <Editable text={fieldValue} childRef={inputRef} onFinishEditing={persistField}>
+      <Editable text={fieldValue} childRef={inputRef} handleFinishEditing={() => persistField()}>
         <input ref={inputRef} type="text" name={props.field} value={fieldValue} onChange={e => setFieldValue(e.target.value)} />
       </Editable>
     </React.Fragment>

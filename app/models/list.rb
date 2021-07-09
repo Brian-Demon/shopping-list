@@ -42,13 +42,16 @@ class List < ApplicationRecord
             :name,
             :person,
             :department,
-            :bought
+            :bought,
+            :id,
+            :quantity
           ]
         }
       }
       }).merge({
         unbought_count: items.unbought.count,
-        item_count: items.active.count
+        item_count: items.active.count,
+        active: items.active
       })
   end
 end
