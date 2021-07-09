@@ -11,13 +11,12 @@ class SharedListsController < ApplicationController
     )
     if @shared_list.save
       respond_to do |format|
-        format.html { redirect_to root_path,
-          notice: "#{List.find_by(id: list_id).name} shared with #{email}"
-        }
-        format.json { render json: {
-          message: "#{List.find_by(id: list_id).name} shared with #{email}"
-          }
-        }
+        format.html do 
+          redirect_to root_path, notice: "#{List.find_by(id: list_id).name} shared with #{email}"
+        end
+        format.json do
+          render json: { message: "#{List.find_by(id: list_id).name} shared with #{email}" }
+        end
       end
     else
       respond_to do |format|
