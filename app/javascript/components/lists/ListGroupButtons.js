@@ -49,7 +49,7 @@ const ListGroupButtons = (props) => {
         "X-CSRF-Token": csrf,
       }
     })
-    .then(response => response.json)
+    .then(response => response.json())
     .then(json_response => {
       console.log("json_response: " + json_response.message);
     })
