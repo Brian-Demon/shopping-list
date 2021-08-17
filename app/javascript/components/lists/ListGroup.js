@@ -7,7 +7,7 @@ const ListGroup = (props) => {
   const [lists, setLists] = useState(props.lists);
 
   const csrf = props.csrf;
-  const previous_item_data = props.previous_item_data;
+  const previousItemData = props.previousItemData;
   const inputRef = React.useRef(null);
 
   const handleStateChange = ( listId ) => {
@@ -80,7 +80,7 @@ const ListGroup = (props) => {
         <Table
           key={list.id}
           id={list.id}
-          previous_item_data={previous_item_data}
+          previousItemData={previousItemData}
           items={list.items}
           csrf={csrf}
         />
@@ -111,7 +111,7 @@ const ListGroup = (props) => {
   
   return (
     <React.Fragment>
-      <PreviousDataLists key="previous_item_data" previous_item_data={props.previous_item_data} />
+      <PreviousDataLists key="previousItemData" previousItemData={props.previousItemData} />
       {renderLists()}
       {displayLists}
       {renderItems()}
