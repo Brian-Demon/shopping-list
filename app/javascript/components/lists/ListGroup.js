@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react"
-import ListEntry from "./ListEntry"
-import PreviousDataLists from "../items/PreviousDatalists"
-import Table from "../items/Table"
+import React, { useState, useEffect } from "react";
+import ListEntry from "./ListEntry";
+import PreviousDataLists from "../items/PreviousDatalists";
+import Table from "../items/Table";
 
 const ListGroup = (props) => {
   const [lists, setLists] = useState(props.lists);
@@ -10,87 +10,84 @@ const ListGroup = (props) => {
   const previousItemData = props.previousItemData;
   const inputRef = React.useRef(null);
 
-  const handleStateChange = ( listId ) => {
-
+  const handleStateChange = (listId) => {
     var newLists = [...lists];
 
-    newLists.map((list, index) =>{
+    newLists.map((list, index) => {
       let id = list.id;
-      if( id === listId ){
+      if (id === listId) {
         newLists.splice(index, 1);
         setLists(newLists);
       }
 
-      if( newLists.length > 0 ){
-        let id = ("list-" + newLists[0].id + "-list");
+      if (newLists.length > 0) {
+        let id = "list-" + newLists[0].id + "-list";
         document.getElementById(id).click();
       } else {
         window.location.reload();
       }
-    })
-  }
+    });
+  };
 
   const displayList = (list, index) => {
     let isActive = false;
-    if(index == 0){
+    if (index == 0) {
       isActive = true;
     }
-    return(
-      <ListEntry 
+    return (
+      <ListEntry
         key={list.id}
         list={list}
         csrf={csrf}
         handleStateChange={handleStateChange}
         isActive={isActive}
       />
-    )
-  }
+    );
+  };
 
   var displayLists;
   var displayItems;
 
   const renderLists = () => {
-    if( lists.length > 0 ){
-      displayLists =
+    if (lists.length > 0) {
+      displayLists = (
         <div>
           <h3 className="text-center">Lists</h3>
-          <div className="list-group">
-            {lists.map(displayList)}
-          </div>
+          <div className="list-group">{lists.map(displayList)}</div>
         </div>
+      );
     } else {
-      displayLists =
+      displayLists = (
         <div className="text-center">
-          <h3>
-            Create a list to begin!
-          </h3>
+          <h3>Create a list to begin!</h3>
         </div>
+      );
     }
-  }
+  };
 
   const displayItem = (list, index) => {
     let isActive = "";
-    if(index == 0){
+    if (index == 0) {
       isActive = "active";
     }
     let className = "shopping-list tab-pane fade show " + isActive;
     let id = "list-" + list.id;
-    return(
+    return (
       <div key={list.id} className={className} id={id}>
         <Table
           key={list.id}
           id={list.id}
           previousItemData={previousItemData}
-          items={list.items}
+          items={list.items.filter((item) => item.active)}
           csrf={csrf}
         />
       </div>
-    )
-  }
+    );
+  };
 
   const renderItems = () => {
-    if( lists.length > 0 ){
-      displayItems =
+    if (lists.length > 0) {
+      displayItems = (
         <div>
           <h3 className="text-center">Items</h3>
           <div className="row mt-4 text-center">
@@ -99,25 +96,28 @@ const ListGroup = (props) => {
             </div>
           </div>
         </div>
+      );
     } else {
-      displayItems =
+      displayItems = (
         <div className="text-center">
-          <h3>
-            Create a list to begin!
-          </h3>
+          <h3>Create a list to begin!</h3>
         </div>
+      );
     }
-  }
-  
+  };
+
   return (
     <React.Fragment>
-      <PreviousDataLists key="previousItemData" previousItemData={props.previousItemData} />
+      <PreviousDataLists
+        key="previousItemData"
+        previousItemData={props.previousItemData}
+      />
       {renderLists()}
       {displayLists}
       {renderItems()}
       {displayItems}
     </React.Fragment>
   );
-}
+};
 
-export default ListGroup
+export default ListGroup;

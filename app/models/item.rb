@@ -25,4 +25,23 @@ class Item < ApplicationRecord
   def add_back_to_list
     update(quantity: 1, deleted_at: nil, bought: false)
   end
+
+  def active
+    deleted_at.nil?
+  end
+
+  def serializable_hash(*)
+    super({
+      only: [
+        :name,
+        :person,
+        :department,
+        :bought,
+        :id,
+        :quantity,
+      ],
+    }).merge(
+      active: active
+    )
+  end
 end
