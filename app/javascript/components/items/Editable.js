@@ -9,6 +9,7 @@ const Editable = ({
   ...props
 }) => {
   const [isEditing, setEditing] = useState(false);
+  const { handleFinishEditing, ...rest } = props;
 
   useEffect(() => {
     if (childRef && childRef.current && isEditing === true) {
@@ -18,11 +19,11 @@ const Editable = ({
 
   const onBlur = () => {
     setEditing(false);
-    props.onFinishEditing();
+    handleFinishEditing();
   }
 
   return (
-    <section {...props}>
+    <section {...rest}>
       {isEditing ? (
         <div onBlur={onBlur} >
           {children}

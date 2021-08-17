@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react"
 import ListEntry from "./ListEntry"
+import PreviousDataLists from "../items/PreviousDatalists"
+import Table from "../items/Table"
 
 const ListGroup = (props) => {
   const [lists, setLists] = useState(props.lists);
 
   const csrf = props.csrf;
+  const previousItemData = props.previousItemData;
   const inputRef = React.useRef(null);
 
   const handleStateChange = ( listId ) => {
@@ -43,20 +46,20 @@ const ListGroup = (props) => {
     )
   }
 
-  var display;
+  var displayLists;
+  var displayItems;
 
-  const renderDisplay = () => {
+  const renderLists = () => {
     if( lists.length > 0 ){
-      display =
+      displayLists =
         <div>
           <h3 className="text-center">Lists</h3>
           <div className="list-group">
             {lists.map(displayList)}
           </div>
-          <h3 className="text-center">Items</h3>
         </div>
     } else {
-      display =
+      displayLists =
         <div className="text-center">
           <h3>
             Create a list to begin!
@@ -65,11 +68,54 @@ const ListGroup = (props) => {
     }
   }
 
+  const displayItem = (list, index) => {
+    let isActive = "";
+    if(index == 0){
+      isActive = "active";
+    }
+    let className = "shopping-list tab-pane fade show " + isActive;
+    let id = "list-" + list.id;
+    return(
+      <div key={list.id} className={className} id={id}>
+        <Table
+          key={list.id}
+          id={list.id}
+          previousItemData={previousItemData}
+          items={list.items}
+          csrf={csrf}
+        />
+      </div>
+    )
+  }
+
+  const renderItems = () => {
+    if( lists.length > 0 ){
+      displayItems =
+        <div>
+          <h3 className="text-center">Items</h3>
+          <div className="row mt-4 text-center">
+            <div className="tab-content" id="nav-tabContent">
+              {lists.map(displayItem)}
+            </div>
+          </div>
+        </div>
+    } else {
+      displayItems =
+        <div className="text-center">
+          <h3>
+            Create a list to begin!
+          </h3>
+        </div>
+    }
+  }
   
   return (
     <React.Fragment>
-      {renderDisplay()}
-      {display}
+      <PreviousDataLists key="previousItemData" previousItemData={props.previousItemData} />
+      {renderLists()}
+      {displayLists}
+      {renderItems()}
+      {displayItems}
     </React.Fragment>
   );
 }

@@ -10,11 +10,10 @@
 }
 
 .bought-col {
-    width: 90px;
+    @extend .col-2;
 }
 
 .text-col {
-    width: 175px;
 }
 
 .quantity-col {
