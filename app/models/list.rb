@@ -12,7 +12,7 @@ class List < ApplicationRecord
       where(bought: false)
     end
     def unbought_and_active
-      where(bought: false).where(deleted_at: nil)
+      unbought.active
     end
   end
   validates :name, length: { minimum: 1 }
