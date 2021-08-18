@@ -13,7 +13,7 @@
       </div>
       <div class="row pt-4">
         <div class="col-10 offset-1">
-          <%= react_component("lists/ListGroup", { lists: @all_lists, previous_item_data: @previous_item_data, csrf: form_authenticity_token  })%>
+          <%= react_component("lists/ListGroup", { lists: @all_lists, previousItemData: @previous_item_data, csrf: form_authenticity_token  })%>
         </div>
       </div>
   <% else %>
