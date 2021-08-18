@@ -41,7 +41,7 @@ class List < ApplicationRecord
       only: [:id, :name],
       include: [:items]
       }).merge({
-        unbought_and_active: items.unbought_and_active.count,
+        unbought: items.unbought_and_active.count,
         item_count: items.active.count,
         active: items.active
       })
