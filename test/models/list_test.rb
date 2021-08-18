@@ -46,30 +46,32 @@ class ListTest < ActiveSupport::TestCase
     )
     assert_equal(
       {
-        "id"=>list.id,
+        "id"=>980190963,
         "name"=>"Shopping Place",
-        "items"=>[
+        "items"=>
+        [
           {
             "id"=>nil,
             "name"=>"Item 1",
             "person"=>"Person 1",
             "department"=>"Department 1",
             "bought"=>false,
-            "quantity"=>nil
-          },
-          {
-            "id"=>nil,
-            "name"=>"Item 2",
-            "person"=>"Person 2",
-            "department"=>"Department 2",
-            "bought"=>false,
-            "quantity"=>nil
-          }
-        ],
-        :unbought_count=>0,
-        :item_count=>0,
-        :active=>list.items.active
-      },
+            "quantity"=>nil,
+            "active"=>true},
+            {
+              "id"=>nil,
+              "name"=>"Item 2",
+              "person"=>"Person 2",
+              "department"=>"Department 2",
+              "bought"=>false,
+              "quantity"=>nil,
+              "active"=>true
+            }
+          ],
+            :unbought_count=>0,
+            :item_count=>0,
+            :active=>list.items.active
+        },
       list.as_json
     )
   end
