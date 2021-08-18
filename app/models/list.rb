@@ -11,6 +11,9 @@ class List < ApplicationRecord
     def unbought
       where(bought: false)
     end
+    def unbought_and_active
+      unbought.active
+    end
   end
   validates :name, length: { minimum: 1 }
   validates :name, uniqueness: true;
@@ -38,7 +41,7 @@ class List < ApplicationRecord
       only: [:id, :name],
       include: [:items]
       }).merge({
-        unbought_count: items.unbought.count,
+        unbought: items.unbought_and_active.count,
         item_count: items.active.count,
         active: items.active
       })

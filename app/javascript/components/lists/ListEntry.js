@@ -9,7 +9,7 @@ const ListEntry = (props) => {
   const ariaControls = "list-" + list.id;
   const id = ariaControls + "-list";
   const href = "#list-" + list.id;
-  const badgeItemCount = (list.unbought_count) + "/" + (list.item_count);
+  const badgeItemCount = (list.unbought) + "/" + (list.item_count);
 
   return (
     <React.Fragment>
