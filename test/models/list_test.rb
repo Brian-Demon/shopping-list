@@ -23,7 +23,7 @@ class ListTest < ActiveSupport::TestCase
         "id"=>1,
         "name"=>"Shopping Place",
         "items"=>[],
-        :unbought_and_active=>0,
+        :unbought=>0,
         :item_count=>0,
         :active=>list.items.active
       },
@@ -68,7 +68,7 @@ class ListTest < ActiveSupport::TestCase
               "active"=>true
             }
           ],
-            :unbought_and_active=>0,
+            :unbought=>0,
             :item_count=>0,
             :active=>list.items.active
         },
