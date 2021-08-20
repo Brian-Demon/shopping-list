@@ -39,15 +39,4 @@ class List < ApplicationRecord
   def is_shared_with?(u)
     user != u
   end
-
-  def as_json(*)
-    super({
-      only: [:id, :name],
-      include: [:items]
-      }).merge({
-        unbought: items.unbought_and_active.count,
-        item_count: items.active.count,
-        active: items.active,
-      })
-  end
 end

@@ -11,8 +11,8 @@ const ListEntry = (props) => {
   const id = ariaControls + "-list";
   const href = "#list-" + list.id;
   const badgeItemCount = list.unbought + "/" + list.item_count;
-
-  const listName = list.name;
+  const sharedName = list.shared ? " (shared)" : "";
+  const listName = list.name + sharedName;
 
   return (
     <React.Fragment>
@@ -26,7 +26,7 @@ const ListEntry = (props) => {
         aria-controls={ariaControls}
       >
         <span className="p-0 m-0 flex-grow-1 me-auto list-name">
-          {list.name}
+          {listName}
         </span>
         <span className="badge bg-primary rounded-pill item-count">
           <span className="align-middle">{badgeItemCount}</span>
