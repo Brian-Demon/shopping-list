@@ -21,11 +21,10 @@ class ListTest < ActiveSupport::TestCase
     assert_equal(
       {
         "id"=>1,
+        "user_id"=>list.user_id,
         "name"=>"Shopping Place",
-        "items"=>[],
-        :unbought=>0,
-        :item_count=>0,
-        :active=>list.items.active
+        "created_at"=>list.created_at,
+        "updated_at"=>list.updated_at,
       },
       list.as_json
     )
@@ -47,31 +46,11 @@ class ListTest < ActiveSupport::TestCase
     assert_equal(
       {
         "id"=>980190963,
+        "user_id"=>list.user_id,
         "name"=>"Shopping Place",
-        "items"=>
-        [
-          {
-            "id"=>nil,
-            "name"=>"Item 1",
-            "person"=>"Person 1",
-            "department"=>"Department 1",
-            "bought"=>false,
-            "quantity"=>nil,
-            "active"=>true},
-            {
-              "id"=>nil,
-              "name"=>"Item 2",
-              "person"=>"Person 2",
-              "department"=>"Department 2",
-              "bought"=>false,
-              "quantity"=>nil,
-              "active"=>true
-            }
-          ],
-            :unbought=>0,
-            :item_count=>0,
-            :active=>list.items.active
-        },
+        "created_at"=>list.created_at.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
+        "updated_at"=>list.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
+      },
       list.as_json
     )
   end
