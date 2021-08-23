@@ -98,11 +98,7 @@ const ListGroup = (props) => {
         </div>
       );
     } else {
-      displayItems = (
-        <div className="text-center">
-          <h3>Create a list to begin!</h3>
-        </div>
-      );
+      displayItems = null
     }
   };
 
