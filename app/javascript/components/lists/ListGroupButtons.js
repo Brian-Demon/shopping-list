@@ -9,11 +9,20 @@ const ListGroupButtons = (props) => {
   let buttonGroup;
 
   if( showButtonGroup == 0 ){
-    buttonGroup =
-      <div className="btn-group btn-group-sm" role="group">
-        <button type="button" className="btn btn-success" onClick={() => setShowButtonGroup(1)}>Share</button>
-        <button type="button" className="btn btn-danger" onClick={() => setShowButtonGroup(2)}>Delete</button>
-      </div>;
+    if (!list.shared){
+      buttonGroup =
+        <div className="btn-group btn-group-sm" role="group">
+          <button type="button" className="btn btn-success" onClick={() => setShowButtonGroup(1)}>Share</button>
+          <button type="button" className="btn btn-danger" onClick={() => setShowButtonGroup(2)}>Delete</button>
+        </div>;
+    } else {
+      buttonGroup = 
+        <button
+          type="button"
+          className="btn btn-sm btn-danger"
+          onClick={() => setShowButtonGroup(3)}>Remove
+        </button>;
+    }
   } else if( showButtonGroup == 1 ){
     buttonGroup =
     <form>
@@ -27,6 +36,12 @@ const ListGroupButtons = (props) => {
     buttonGroup =
     <div className="btn-group btn-group-sm" role="group">
       <button type="button" className="btn btn-danger" onClick={() => confirmDelete()}>DELETE</button>
+      <button type="button" className="btn btn-secondary" onClick={() => setShowButtonGroup(0)}>Cancel</button>
+    </div>;
+  } else if( showButtonGroup == 3 ){
+    buttonGroup =
+    <div className="btn-group btn-group-sm" role="group">
+      <button type="button" className="btn btn-danger" onClick={() => confirmRemove()}>REMOVE</button>
       <button type="button" className="btn btn-secondary" onClick={() => setShowButtonGroup(0)}>Cancel</button>
     </div>;
   } else {
@@ -49,6 +64,20 @@ const ListGroupButtons = (props) => {
         "X-CSRF-Token": csrf,
       }
     }).then(response => props.setState(list.id));
+  }
+
+  const confirmRemove = () => {
+    // const data = { list_id: list.id };
+    // fetch("/shared_lists/" + list.id, {
+    //   method: "DELETE",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "Accept": "application/json",
+    //     "X-CSRF-Token": csrf,
+    //   }
+    // }).then(response => props.setState(list.id));
+    console.log("Shared List ID: " + list.shared_list_id)
   }
 
   return (

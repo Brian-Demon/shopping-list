@@ -39,4 +39,8 @@ class List < ApplicationRecord
   def is_shared_with?(u)
     user != u
   end
+
+  def shared_list_id
+    SharedList.find_by(list_id: self.id)&.id
+  end
 end
