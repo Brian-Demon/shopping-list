@@ -13,7 +13,9 @@ class ListsSerializer
         unbought: list.items.unbought_and_active.count,
         item_count: list.items.active.count,
         active: list.items.active,
-        shared: list.is_shared_with?(@user)
+        is_shared_with_user: list.is_shared_with?(@user),
+        shared_list_owner: list.shared_list_owner,
+        number_shared_with: list.number_shared_with
       })
     end
   end
