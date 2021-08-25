@@ -45,6 +45,6 @@ class List < ApplicationRecord
   end
 
   def number_shared_with
-    SharedList.where(list_id: self.id).length
+    SharedList.where(list_id: self.id).count
   end
 end
