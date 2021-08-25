@@ -44,7 +44,7 @@ class List < ApplicationRecord
     user.first_name + " " + user.last_name
   end
 
-  def share_count
-    SharedList.where(list_id: self.id).length
+  def number_shared_with
+    SharedList.where(list_id: self.id).count
   end
 end
