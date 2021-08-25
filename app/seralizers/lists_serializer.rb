@@ -15,7 +15,7 @@ class ListsSerializer
         active: list.items.active,
         is_shared_with_user: list.is_shared_with?(@user),
         shared_list_owner: list.shared_list_owner,
-        number_shared_with: list.number_shared_with
+        share_count: list.share_count
       })
     end
   end

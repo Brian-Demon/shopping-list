@@ -12,8 +12,8 @@ const ListEntry = (props) => {
   const href = "#list-" + list.id;
   const badgeItemCount = list.unbought + "/" + list.item_count;
   const sharedName = list.is_shared_with_user ? ` (Owner: ${list.shared_list_owner})` : "";
-  const numberSharedWith = list.number_shared_with;
-  const sharingText = (numberSharedWith > 0 && list.shared_list_owner == (props.user.first_name + " " + props.user.last_name)) ? ` (Shares: ${numberSharedWith})` : "";
+  const numberSharedWith = list.share_count;
+  const sharingText = (numberSharedWith > 0 && !list.is_shared_with_user) ? ` (Shares: ${numberSharedWith})` : "";
   const listName = list.name + sharedName + sharingText;
 
   return (

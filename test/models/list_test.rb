@@ -113,12 +113,12 @@ class ListTest < ActiveSupport::TestCase
     assert_equal results, list.shared_list_owner
   end
 
-  test "number_shared_with returns correct number of users list is shared with" do
+  test "share_count returns correct number of users list is shared with" do
     setup_shared_lists!
 
     assert_equal 2, SharedList.count
 
     list = List.last
-    assert_equal 2, list.number_shared_with
+    assert_equal 2, list.share_count
   end
 end
