@@ -37,6 +37,7 @@ const ListGroup = (props) => {
     return (
       <ListEntry
         key={list.id}
+        user={props.user}
         list={list}
         csrf={csrf}
         handleStateChange={handleStateChange}
@@ -79,6 +80,8 @@ const ListGroup = (props) => {
           id={list.id}
           previousItemData={previousItemData}
           items={list.items.filter((item) => item.active)}
+          shared={list.is_shared_with_user}
+          sharedOwner={list.shared_list_owner}
           csrf={csrf}
         />
       </div>

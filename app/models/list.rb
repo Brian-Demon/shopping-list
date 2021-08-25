@@ -39,4 +39,12 @@ class List < ApplicationRecord
   def is_shared_with?(u)
     user != u
   end
+
+  def shared_list_owner
+    user.first_name + " " + user.last_name
+  end
+
+  def share_count
+    SharedList.where(list_id: self.id).count
+  end
 end
