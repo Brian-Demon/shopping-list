@@ -4,7 +4,6 @@ import QuantityController from "./QuantityController"
 
 const useSortableData = (items, config = null) => {
   const [sortConfig, setSortConfig] = React.useState(config);
-
   const sortedItems = React.useMemo(() => {
     let sortableItems = [...items];
     if (sortConfig !== null) {
@@ -43,6 +42,7 @@ const useSortableData = (items, config = null) => {
 };
 
 const ItemRow = (props) => {
+  const shared = props.shared;
   const item = props.item;
   const bought = item.bought ? "item-bought" : "";
   const checked = item.bought ? "checked" : "";
@@ -53,7 +53,11 @@ const ItemRow = (props) => {
     <tr className={rowClasses}>
       <td><input type="checkbox" value="1" checked={checked} id={checkboxId} onChange={() => props.toggleBought(item)} /></td>
       <td><EditableField id={item.id} field="name" text={item.name} csrf={props.csrf} /></td>
-      <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
+      {shared ? (
+        <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
+      ) : (
+        <td></td>
+      )}
       <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
       <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf} removeItem={props.removeItem}/></th>
     </tr>
@@ -152,6 +156,25 @@ const Table = (props) => {
   }
 
   const listPresent = items.length > 0;
+  const shared = props.list.is_shared_with_user;
+  var personHeader = null;
+  var personFooter = null;
+  if (shared) {
+    personHeader = 
+      <th className="text-col">
+        <button
+          type="button"
+          onClick={() => requestSort("person")}
+          className={"btn btn-primary btn-sm " + getClassNamesFor("person")}
+        >
+          Person
+        </button>
+      </th>;
+    personFooter = 
+      <td>
+        <input name="itemPersonField" placeholder="Person Name" list="item_person_datalist_options"/>
+      </td>;
+  }
   return (
     <React.Fragment>
       <table className="table items-table align-middle">
@@ -175,15 +198,7 @@ const Table = (props) => {
                 Item
               </button>
             </th>
-            <th className="text-col">
-              <button
-                type="button"
-                onClick={() => requestSort("person")}
-                className={"btn btn-primary btn-sm " + getClassNamesFor("person")}
-              >
-                Person
-              </button>
-            </th>
+            { personHeader }
             <th className="text-col">
               <button
                 type="button"
@@ -206,7 +221,7 @@ const Table = (props) => {
         </thead>
         <tbody>
           {sortedItems.map((item, index) => ( 
-            <ItemRow key={item.id} item={item} csrf={csrf} toggleBought={toggleBought} removeItem={removeItem} />
+            <ItemRow shared={shared} key={item.id} item={item} csrf={csrf} toggleBought={toggleBought} removeItem={removeItem} />
           ))}
         </tbody>
         <tfoot>
@@ -221,9 +236,7 @@ const Table = (props) => {
             <td>
               <input name="itemNameField" placeholder="Item Name" list="item_name_datalist_options"/>
             </td>
-            <td>
-              <input name="itemPersonField" placeholder="Person Name" list="item_person_datalist_options"/>
-            </td>
+            { personFooter }
             <td>
               <input name="itemDepartmentField" placeholder="Department Name" list="item_department_datalist_options"/>
             </td>

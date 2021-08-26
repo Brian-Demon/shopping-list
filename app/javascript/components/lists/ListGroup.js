@@ -8,7 +8,6 @@ const ListGroup = (props) => {
 
   const csrf = props.csrf;
   const previousItemData = props.previousItemData;
-  const inputRef = React.useRef(null);
 
   const handleStateChange = (listId) => {
     var newLists = [...lists];
@@ -83,6 +82,7 @@ const ListGroup = (props) => {
           shared={list.is_shared_with_user}
           sharedOwner={list.shared_list_owner}
           csrf={csrf}
+          list={list}
         />
       </div>
     );
