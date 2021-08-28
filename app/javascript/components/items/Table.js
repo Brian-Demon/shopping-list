@@ -43,6 +43,7 @@ const useSortableData = (items, config = null) => {
 
 const ItemRow = (props) => {
   const shared = props.shared;
+  const displayLocation = props.displayLocation;
   const item = props.item;
   const bought = item.bought ? "item-bought" : "";
   const checked = item.bought ? "checked" : "";
@@ -58,7 +59,11 @@ const ItemRow = (props) => {
       ) : (
         <td></td>
       )}
-      <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
+      {displayLocation ? (
+        <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
+      ) : (
+        <td></td>
+      )}
       <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf} removeItem={props.removeItem}/></th>
     </tr>
   );
@@ -159,6 +164,8 @@ const Table = (props) => {
   const shared = props.list.is_shared_with_user;
   var personHeader = null;
   var personFooter = null;
+  var locationHeader = null;
+  var locationFooter = null;
   if (shared) {
     personHeader = 
       <th className="text-col">
@@ -173,6 +180,22 @@ const Table = (props) => {
     personFooter = 
       <td>
         <input name="itemPersonField" placeholder="Person Name" list="item_person_datalist_options"/>
+      </td>;
+  }
+  if (props.displayLocation) {
+    locationHeader = 
+      <th className="text-col">
+        <button
+          type="button"
+          onClick={() => requestSort("department")}
+          className={"btn btn-primary btn-sm " + getClassNamesFor("department")}
+        >
+          Location
+        </button>
+      </th>;
+    locationFooter = 
+      <td>
+        <input name="itemDepartmentField" placeholder="Department/Aisle" list="item_department_datalist_options"/>
       </td>;
   }
   return (
@@ -199,15 +222,7 @@ const Table = (props) => {
               </button>
             </th>
             { personHeader }
-            <th className="text-col">
-              <button
-                type="button"
-                onClick={() => requestSort("department")}
-                className={"btn btn-primary btn-sm " + getClassNamesFor("department")}
-              >
-                Department
-              </button>
-            </th>
+            { locationHeader }
             <th className="quantity-col">
               <button
                 type="button"
@@ -237,9 +252,7 @@ const Table = (props) => {
               <input name="itemNameField" placeholder="Item Name" list="item_name_datalist_options"/>
             </td>
             { personFooter }
-            <td>
-              <input name="itemDepartmentField" placeholder="Department Name" list="item_department_datalist_options"/>
-            </td>
+            { locationFooter }
             <td>
               <button className="btn btn-success btn-sm" onClick={handleSubmit}>Add Item</button>
             </td>
