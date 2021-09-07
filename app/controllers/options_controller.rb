@@ -12,8 +12,6 @@ class OptionsController < ApplicationController
   def update_display_location
     user = User.find(params[:id])
     if user.update(display_location: !user.display_location)
-      # user.display_location = !user.display_location
-      puts "USER [#{user.first_name}] display_location = #{user.display_location}"
       respond_to do |format|
         format.html { redirect_to options_path, notice: "Location option updated: #{user.display_location}" }
         format.json { render json: { message: "Location option updated: #{user.display_location}", user: user.attributes } }
