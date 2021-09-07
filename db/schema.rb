@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_24_004150) do
+ActiveRecord::Schema.define(version: 2021_08_27_182525) do
 
   create_table "items", force: :cascade do |t|
     t.integer "list_id", null: false
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2021_08_24_004150) do
     t.string "image"
     t.string "first_name"
     t.string "last_name"
+    t.boolean "display_location", default: false
   end
 
   add_foreign_key "items", "lists"

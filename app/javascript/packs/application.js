@@ -7,7 +7,7 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import "bootstrap"
+import * as bootstrap from "bootstrap"
 
 Rails.start()
 Turbolinks.start()
@@ -30,6 +30,12 @@ window.addEventListener("load", () => {
             const [_data, _status, xhr] = event.detail;
 //             alert("ERROR - " + JSON.parse(xhr.responseText)["message"]);
         });
+    })
+
+    // Manually binds any Bootstrap popover components
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
     })
 });
 // Support component names relative to this directory:
