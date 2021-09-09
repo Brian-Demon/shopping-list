@@ -32,11 +32,11 @@
         </div>
 
         <div class="col-md-4">
-          <%= form.label :department, "Department:", class: "form-label" %>
-          <%= form.text_field :department, class: "form-control", list: "item_department_datalist_options" %>
-          <datalist id="item_department_datalist_options">
-            <% @previous_item_departments.each do |department| %>
-              <option><%= department %></option>
+          <%= form.label :location, "Location:", class: "form-label" %>
+          <%= form.text_field :location, class: "form-control", list: "item_location_datalist_options" %>
+          <datalist id="item_location_datalist_options">
+            <% @previous_item_locations.each do |location| %>
+              <option><%= location %></option>
             <% end %>
           </datalist>
         </div>

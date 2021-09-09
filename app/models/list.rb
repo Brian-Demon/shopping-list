@@ -22,14 +22,14 @@ class List < ApplicationRecord
     item = items.new(
       name: params[:name].downcase.camelize, 
       person: params[:person].downcase.camelize, 
-      department: params[:department].downcase.camelize, 
+      location: params[:location].downcase.camelize, 
       quantity: 1
     )
 
     if item.valid?
       item.name = params[:name]
       item.person = params[:person]
-      item.department = params[:department]
+      item.location = params[:location]
       item.save
     end
 

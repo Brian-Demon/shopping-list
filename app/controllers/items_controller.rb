@@ -53,7 +53,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.permit(:bought, :name, :person, :department, :quantity)
+    params.permit(:bought, :name, :person, :location, :quantity)
   end
 
   def remove

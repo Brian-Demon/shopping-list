@@ -3,7 +3,7 @@
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Person</th>
-      <th scope="col">Department</th>
+      <th scope="col">Location</th>
       <th scope="col">DELETE FOREVER
       </th>
     </tr>
@@ -33,8 +33,8 @@
            <%= react_component(
              "items/EditableField",
              { id: item.id,
-              field: "department",
-              text: item.department,
+              field: "location",
+              text: item.location,
               csrf: form_authenticity_token 
             }) %>
         </td>

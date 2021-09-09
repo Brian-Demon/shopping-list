@@ -96,7 +96,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
       list_id: 1,
       name: "item",
       person: "person",
-      department: "department",
+      location: "location",
       bought: true,
       quantity: 0
     )

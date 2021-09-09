@@ -62,6 +62,7 @@ class ListTest < ActiveSupport::TestCase
         "name"=>"Shopping Place",
         "created_at"=>list.created_at,
         "updated_at"=>list.updated_at,
+        "display_location"=>false,
       },
       list.as_json
     )
@@ -74,12 +75,12 @@ class ListTest < ActiveSupport::TestCase
     list.items.create(
       name: "Item 1",
       person: "Person 1",
-      department: "Department 1"
+      location: "Location 1"
     ).save
     list.items.create(
       name: "Item 2",
       person: "Person 2",
-      department: "Department 2"
+      location: "Location 2"
     ).save
     assert_equal(
       {
@@ -88,6 +89,7 @@ class ListTest < ActiveSupport::TestCase
         "name"=>"Shopping Place",
         "created_at"=>list.created_at.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
         "updated_at"=>list.updated_at.strftime('%Y-%m-%dT%H:%M:%S.%LZ'),
+        "display_location"=>false,
       },
       list.as_json
     )

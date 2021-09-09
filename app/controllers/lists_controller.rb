@@ -19,14 +19,14 @@ class ListsController < ApplicationController
   def edit
     @previous_item_names = Item.joins(:list).where(list: { user: current_user}).pluck(:name).uniq
     @previous_item_people = Item.joins(:list).where(list: { user: current_user}).pluck(:person).uniq
-    @previous_item_departments = Item.joins(:list).where(list: { user: current_user}).pluck(:department).uniq
+    @previous_item_locations = Item.joins(:list).where(list: { user: current_user}).pluck(:location).uniq
     @list = List.find_by(id: params[:id])
   end
 
   def show
     @previous_item_names = Item.joins(:list).where(list: { user: current_user}).pluck(:name).uniq
     @previous_item_people = Item.joins(:list).where(list: { user: current_user}).pluck(:person).uniq
-    @previous_item_departments = Item.joins(:list).where(list: { user: current_user}).pluck(:department).uniq
+    @previous_item_locations = Item.joins(:list).where(list: { user: current_user}).pluck(:location).uniq
     @list = List.find_by(id: params[:id])
   end
 
