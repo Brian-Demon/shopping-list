@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.0.1'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
-gem 'rails', '~> 6.1.3.1'
+gem 'rails', '~> 6.1.4.1'
 # Use Puma as the app server
 gem 'puma', '~> 5.3.1'
 # Use SCSS for stylesheets
@@ -61,6 +61,9 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 3.26'
+  # Security patch: https://cwe.mitre.org/data/definitions/1333.html
+  # NOTE: When updating capybara, check to see if the below gem is still needed
+  gem "addressable", ">= 2.8.0"
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   #gem 'webdrivers'
@@ -71,4 +74,3 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Dependency required gems
 gem "nokogiri", ">= 1.11.4"
-gem "actionpack", ">= 6.1.3.2"
