@@ -4,12 +4,12 @@ one:
   list: one
   name: MyString
   person: MyString
-  department: MyString
+  location: MyString
   bought: false
 
 two:
   list: two
   name: MyString
   person: MyString
-  department: MyString
+  location: MyString
   bought: false

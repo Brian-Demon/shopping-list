@@ -17,7 +17,7 @@ class PreviousDatalists extends React.Component {
       <React.Fragment>
         <Datalist key="name" data_key="name" data={this.props.previousItemData.names} />
         <Datalist key="person" data_key="person" data={this.props.previousItemData.people} />
-        <Datalist key="department" data_key="department" data={this.props.previousItemData.departments} />
+        <Datalist key="location" data_key="location" data={this.props.previousItemData.locations} />
       </React.Fragment>
     );
   }

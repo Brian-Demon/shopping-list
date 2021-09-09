@@ -29,7 +29,7 @@ class ListsTest < ApplicationSystemTestCase
     login!
     user = User.last
     list = user.lists.create(name: "Shopping Place")
-    list.items.create(name: "Bananas", person: "Person", department: "Produce")
+    list.items.create(name: "Bananas", person: "Person", location: "Produce")
     visit root_path
     assert_selector ".items-table-item", count: 1
     assert_css ".list-group-item .list-name", text: "Shopping Place"
@@ -42,7 +42,7 @@ class ListsTest < ApplicationSystemTestCase
     login!
     user = User.last
     list = user.lists.create(name: "Shopping Place")
-    list.items.create(name: "Bananas", person: "Person", department: "Produce")
+    list.items.create(name: "Bananas", person: "Person", location: "Produce")
     visit root_path
     assert_selector ".shopping-list", count: 1
     click_link("edit-list-#{list.id}")
@@ -52,7 +52,7 @@ class ListsTest < ApplicationSystemTestCase
     login!
     user = User.last
     list = user.lists.create(name: "Shopping Place")
-    list.items.create(name: "Bananas", person: "Person", department: "Produce")
+    list.items.create(name: "Bananas", person: "Person", location: "Produce")
     visit root_path
     assert_selector ".items-table-item", count: 1
     click_link("edit-list-#{list.id}")

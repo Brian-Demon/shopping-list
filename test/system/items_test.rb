@@ -8,9 +8,9 @@ class ItemsTest < ApplicationSystemTestCase
 
   def create_previous_shopping_list! user
     previous_list = user.lists.create(name: "Aldi")
-    previous_list.items.create(name: "Bananas", person: "Brian", department: "Produce")
-    previous_list.items.create(name: "Apples", person: "Myk", department: "Produce")
-    previous_list.items.create(name: "Beer", person: "Brian", department: "Alcohol")
+    previous_list.items.create(name: "Bananas", person: "Brian", location: "Produce")
+    previous_list.items.create(name: "Apples", person: "Myk", location: "Produce")
+    previous_list.items.create(name: "Beer", person: "Brian", location: "Alcohol")
   end
 
   test "logged in user can add an item to a list" do
@@ -20,7 +20,7 @@ class ItemsTest < ApplicationSystemTestCase
     visit list_path(list)
     fill_in("Item name:", with: "Bananas")
     fill_in("Person:", with: "Brian")
-    fill_in("Department:", with: "Produce")
+    fill_in("Location:", with: "Produce")
     click_on "Add Item"
     assert_selector ".items-table-item", count: 1
     within ".items-table-item" do
@@ -35,7 +35,7 @@ class ItemsTest < ApplicationSystemTestCase
     visit list_path(list)
     fill_in("Item name:", with: "")
     fill_in("Person:", with: "Brian")
-    fill_in("Department:", with: "Produce")
+    fill_in("Location:", with: "Produce")
     click_on "Add Item"
     assert_selector ".the-list .list-item", count: 0
   end
@@ -63,15 +63,15 @@ class ItemsTest < ApplicationSystemTestCase
     assert_selector "#item_person_datalist_options option", text: "Myk", visible: false
   end
 
-  test "logged in user populates department name suggestions from previous list" do
+  test "logged in user populates location name suggestions from previous list" do
     login!
     user = User.find_by(uid: "31415")
     create_previous_shopping_list! user
     list = user.lists.create(name: "Shopping Place")
     visit list_path(list)
-    assert_selector "#item_department_datalist_options option", count: 2, visible: false
-    assert_selector "#item_department_datalist_options option", text: "Produce", visible: false
-    assert_selector "#item_department_datalist_options option", text: "Alcohol", visible: false
+    assert_selector "#item_location_datalist_options option", count: 2, visible: false
+    assert_selector "#item_location_datalist_options option", text: "Produce", visible: false
+    assert_selector "#item_location_datalist_options option", text: "Alcohol", visible: false
   end
 
   test "logged in user cannot add item when name finds a case insensitive match" do
@@ -82,9 +82,9 @@ class ItemsTest < ApplicationSystemTestCase
     visit list_path(list)
     fill_in("Item name:", with: "BaNaNas")
     fill_in("Person:", with: "Brian")
-    fill_in("Department:", with: "Produce")
-    assert_selector "#item_department_datalist_options option", count: 2, visible: false
-    assert_selector "#item_department_datalist_options option", text: "Produce", visible: false
-    assert_selector "#item_department_datalist_options option", text: "Alcohol", visible: false
+    fill_in("Location:", with: "Produce")
+    assert_selector "#item_location_datalist_options option", count: 2, visible: false
+    assert_selector "#item_location_datalist_options option", text: "Produce", visible: false
+    assert_selector "#item_location_datalist_options option", text: "Alcohol", visible: false
   end
 end

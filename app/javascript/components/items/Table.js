@@ -58,7 +58,7 @@ const ItemRow = (props) => {
       ) : (
         <td></td>
       )}
-      <td><EditableField id={item.id} field="department" text={item.department} csrf={props.csrf} /></td>
+      <td><EditableField id={item.id} field="location" text={item.location} csrf={props.csrf} /></td>
       <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf} removeItem={props.removeItem}/></th>
     </tr>
   );
@@ -76,12 +76,12 @@ const Table = (props) => {
   const handleSubmit = (e) => {
     const nameField = e.target.closest("tr").querySelector("input[name=itemNameField]");
     const personField = e.target.closest("tr").querySelector("input[name=itemPersonField]");
-    const departmentField = e.target.closest("tr").querySelector("input[name=itemDepartmentField]");
+    const locationField = e.target.closest("tr").querySelector("input[name=itemLocationField]");
     const data = {
       list_id: props.id,
       name: nameField.value,
       person: e.target.closest("tr").querySelector("input[name=itemPersonField").value,
-      department: e.target.closest("tr").querySelector("input[name=itemDepartmentField").value,
+      location: e.target.closest("tr").querySelector("input[name=itemLocationField").value,
       quantity: 1
     };
     fetch("/items/", {
@@ -100,7 +100,7 @@ const Table = (props) => {
       requestSort(sortConfig.key, sortConfig.direction);
       nameField.value = "";
       personField.value = "";
-      departmentField.value = "";
+      locationField.value = "";
     });
   }
 
@@ -202,10 +202,10 @@ const Table = (props) => {
             <th className="text-col">
               <button
                 type="button"
-                onClick={() => requestSort("department")}
-                className={"btn btn-primary btn-sm " + getClassNamesFor("department")}
+                onClick={() => requestSort("location")}
+                className={"btn btn-primary btn-sm " + getClassNamesFor("location")}
               >
-                Department
+                Location
               </button>
             </th>
             <th className="quantity-col">
@@ -238,7 +238,7 @@ const Table = (props) => {
             </td>
             { personFooter }
             <td>
-              <input name="itemDepartmentField" placeholder="Department Name" list="item_department_datalist_options"/>
+              <input name="itemLocationField" placeholder="Location Name" list="item_location_datalist_options"/>
             </td>
             <td>
               <button className="btn btn-success btn-sm" onClick={handleSubmit}>Add Item</button>
