@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useReducer } from "react"
 import EditableField from "./EditableField"
 import QuantityController from "./QuantityController"
 
@@ -42,6 +42,7 @@ const useSortableData = (items, config = null) => {
 };
 
 const ItemRow = (props) => {
+  const display_location = props.display_location;
   const shared = props.shared;
   const item = props.item;
   const bought = item.bought ? "item-bought" : "";
@@ -56,16 +57,22 @@ const ItemRow = (props) => {
       {shared ? (
         <td><EditableField id={item.id} field="person" text={item.person} csrf={props.csrf} /></td>
       ) : (
-        <td></td>
+        null
       )}
-      <td><EditableField id={item.id} field="location" text={item.location} csrf={props.csrf} /></td>
+      {display_location ? (
+        <td><EditableField id={item.id} field="location" text={item.location} csrf={props.csrf} /></td>
+      ) : (
+        null
+      )}
       <th scope="row"><QuantityController item={item} quantity={item.quantity} csrf={props.csrf} removeItem={props.removeItem}/></th>
     </tr>
   );
 };
 
 const Table = (props) => {
+  const user = props.user;
   const csrf = props.csrf;
+  const list = props.list;
   const { items, sortedItems, requestSort, sortConfig } = useSortableData(props.items, { key: "name", direction: "ascending"});
   const getClassNamesFor = (name) => {
     if (!sortConfig) {
@@ -77,11 +84,13 @@ const Table = (props) => {
     const nameField = e.target.closest("tr").querySelector("input[name=itemNameField]");
     const personField = e.target.closest("tr").querySelector("input[name=itemPersonField]");
     const locationField = e.target.closest("tr").querySelector("input[name=itemLocationField]");
+    const person = shared ? personField.value : user.first_name;
+    const location = list.display_location ? locationField.value : "N/A"
     const data = {
       list_id: props.id,
       name: nameField.value,
-      person: e.target.closest("tr").querySelector("input[name=itemPersonField").value,
-      location: e.target.closest("tr").querySelector("input[name=itemLocationField").value,
+      person: person,
+      location: location,
       quantity: 1
     };
     fetch("/items/", {
@@ -99,8 +108,12 @@ const Table = (props) => {
       items.push(data);
       requestSort(sortConfig.key, sortConfig.direction);
       nameField.value = "";
-      personField.value = "";
-      locationField.value = "";
+      if( shared ){
+        personField.value = "";
+      }
+      if( list.display_location ){
+        locationField.value = "";
+      }
     });
   }
 
@@ -159,6 +172,8 @@ const Table = (props) => {
   const shared = props.list.is_shared_with_user;
   var personHeader = null;
   var personFooter = null;
+  var locationHeader = null;
+  var locationFooter = null;
   if (shared) {
     personHeader = 
       <th className="text-col">
@@ -173,6 +188,22 @@ const Table = (props) => {
     personFooter = 
       <td>
         <input name="itemPersonField" placeholder="Person Name" list="item_person_datalist_options"/>
+      </td>;
+  }
+  if ( list.display_location ){
+    locationHeader =
+      <th className="text-col">
+        <button
+          type="button"
+          onClick={() => requestSort("location")}
+          className={"btn btn-primary btn-sm " + getClassNamesFor("location")}
+        >
+          Location
+        </button>
+      </th>;
+    locationFooter = 
+      <td>
+        <input name="itemLocationField" placeholder="Location Name" list="item_location_datalist_options"/>
       </td>;
   }
   return (
@@ -199,15 +230,7 @@ const Table = (props) => {
               </button>
             </th>
             { personHeader }
-            <th className="text-col">
-              <button
-                type="button"
-                onClick={() => requestSort("location")}
-                className={"btn btn-primary btn-sm " + getClassNamesFor("location")}
-              >
-                Location
-              </button>
-            </th>
+            { locationHeader }
             <th className="quantity-col">
               <button
                 type="button"
@@ -221,7 +244,7 @@ const Table = (props) => {
         </thead>
         <tbody>
           {sortedItems.map((item, index) => ( 
-            <ItemRow shared={shared} key={item.id} item={item} csrf={csrf} toggleBought={toggleBought} removeItem={removeItem} />
+            <ItemRow display_location={list.display_location} shared={shared} key={item.id} item={item} csrf={csrf} toggleBought={toggleBought} removeItem={removeItem} />
           ))}
         </tbody>
         <tfoot>
@@ -237,9 +260,7 @@ const Table = (props) => {
               <input name="itemNameField" placeholder="Item Name" list="item_name_datalist_options"/>
             </td>
             { personFooter }
-            <td>
-              <input name="itemLocationField" placeholder="Location Name" list="item_location_datalist_options"/>
-            </td>
+            { locationFooter }
             <td>
               <button className="btn btn-success btn-sm" onClick={handleSubmit}>Add Item</button>
             </td>
