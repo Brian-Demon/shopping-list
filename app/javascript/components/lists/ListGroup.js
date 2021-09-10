@@ -83,6 +83,7 @@ const ListGroup = (props) => {
           sharedOwner={list.shared_list_owner}
           csrf={csrf}
           list={list}
+          user={props.user}
         />
       </div>
     );
@@ -101,7 +102,7 @@ const ListGroup = (props) => {
         </div>
       );
     } else {
-      displayItems = null
+      displayItems = null;
     }
   };
 
